@@ -1,0 +1,11 @@
+{
+    "[python]": {
+        "editor.defaultFormatter": "ms-python.autopep8"
+    },
+    "python.formatting.provider": "none",
+    "files.associations": {
+        "limine.h": "c",
+        "limine": "c",
+        "stddef.h": "c"
+    }
+}
