@@ -12,6 +12,9 @@ linkerScriptName = "link.ld"
 
 filesToCompile = []
 
+print("--The AtomOS Builder--")
+print("  Authors: Stephen Byrne, The Python Foundation")
+
 if (os.path.exists("bin/iso")):
     rmtree("bin/iso")
 if (not os.path.exists("bin")):
@@ -81,3 +84,13 @@ if (os.path.exists("bin/iso")):
         subprocess.run([os.getcwd() + "/limine/limine", "bios-install", "bin/iso/AtomOS.iso"])
     elif platform.system() == "Linux":
         subprocess.run(["./limine/limine", "bios-install", "bin/iso/AtomOS.iso"])
+
+useQemu = input("Would you like to run QEMU? (y/n): ")
+if (useQemu.replace(" ", "") != "y" and useQemu.replace(" ", "") != "n"):
+    print("Error: Unknown response")
+
+match useQemu.replace(" ", ""):
+    case "y":
+        subprocess.run(["qemu-system-x86_64" "-boot" "d" "-cdrom" '"bin/iso/AtomOS.iso"' "-m" "2048"])
+    case "n":
+        exit(0)

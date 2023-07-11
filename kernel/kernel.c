@@ -14,8 +14,8 @@ static volatile struct limine_framebuffer_request framebuffer_request =
 };
 
 // First actions the kernel takes after starting up
-void kernel_awake() {
-
+void kernel_awake(void) {
+    
 }
 
 // Clear interrupts and halt
