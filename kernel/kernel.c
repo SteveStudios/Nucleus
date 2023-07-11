@@ -6,31 +6,32 @@
 #include <stdbool.h>
 
 #include "atom_stdlib/io.h"
-#include "../limine/limine.h"
- 
-static volatile struct limine_framebuffer_request framebuffer_request = 
-{
-    .id = LIMINE_FRAMEBUFFER_REQUEST,
-    .revision = 0
-};
+#include "atom_stdlib/utils.h"
 
 // First actions the kernel takes after starting up
 void kernel_awake(void) {
-    println("Hello, world!", WHITE);
+    println("Hello, world!");
 }
 
 // Clear interrupts and halt
-static void kernel_hang(void) {
+void kernel_hang(void) {
     asm ("cli");
     do {
         asm ("hlt");
     } while (true);
 }
 
+// Kernel update loop
+void kernel_update(void) {
+    while (__active)
+    {
+        if (framebuffer_request.response == NULL || framebuffer_request.response->framebuffer_count < 1) 
+            kernel_hang();
+    }
+}
+
 // Entry point
 void kernel_enter(void) {
     kernel_awake();
-    if (framebuffer_request.response == NULL || framebuffer_request.response->framebuffer_count < 1) 
-        kernel_hang();
-    kernel_hang();
+    kernel_update();
 }

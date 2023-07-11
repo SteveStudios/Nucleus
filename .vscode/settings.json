@@ -6,6 +6,10 @@
     "files.associations": {
         "limine.h": "c",
         "limine": "c",
-        "stddef.h": "c"
+        "stddef.h": "c",
+        "ostream": "c",
+        "sstream": "c",
+        "flanterm.h": "c",
+        "fb.h": "c"
     }
 }

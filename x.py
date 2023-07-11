@@ -36,8 +36,9 @@ if (not os.path.exists("bin/iso/EFI/BOOT")):
 
 for ext in supportedExtensions:
     for file in glob.iglob('**/*' + ext, recursive=True):
+        print(file)
         if (not ("." + file.split(".")[1]) in supportedExtensions): continue
-        elif os.path.isdir(file) or file.endswith("/limine.c"): continue
+        if os.path.isdir(file) or file.startswith("lib/"): continue
         match ext:
             case ".c":
                 subprocess.run(["x86_64-elf-gcc", "-Wall", "-Wextra", "-std=gnu11", "-ffreestanding", "-fno-stack-protector",
@@ -67,10 +68,10 @@ if (os.path.exists("bin/iso")):
     cfgContents.close()
     copiedFile.close()
 
-    subprocess.run(["cp", "-v", "limine/limine-bios.sys", "limine/limine-bios-cd.bin", "limine/limine-uefi-cd.bin", "bin/iso/"])
+    subprocess.run(["cp", "-v", "lib/limine/limine-bios.sys", "lib/limine/limine-bios-cd.bin", "lib/limine/limine-uefi-cd.bin", "bin/iso/"])
 
-    subprocess.run(["cp", "-v", "limine/BOOTX64.EFI", "bin/iso/EFI/BOOT/"])
-    subprocess.run(["cp", "-v", "limine/BOOTIA32.EFI", "bin/iso/EFI/BOOT/"])
+    subprocess.run(["cp", "-v", "lib/limine/BOOTX64.EFI", "bin/iso/EFI/BOOT/"])
+    subprocess.run(["cp", "-v", "lib/limine/BOOTIA32.EFI", "bin/iso/EFI/BOOT/"])
 
     subprocess.run(["xorriso", "-as", "mkisofs", "-b", "limine-bios-cd.bin","-no-emul-boot", "-boot-load-size", "4", "-boot-info-table", 
                     "--efi-boot", 
@@ -83,11 +84,11 @@ if (os.path.exists("bin/iso")):
                     "bin/iso/AtomOS.iso"])
     
     if platform.system() == "Windows":
-        subprocess.run(["limine/limine.exe", "bios-install", "bin/iso/AtomOS.iso"])
+        subprocess.run(["lib/limine/limine.exe", "bios-install", "bin/iso/AtomOS.iso"])
     elif platform.system() == "Darwin":
-        subprocess.run([os.getcwd() + "/limine/limine", "bios-install", "bin/iso/AtomOS.iso"])
+        subprocess.run([os.getcwd() + "/lib/limine/limine", "bios-install", "bin/iso/AtomOS.iso"])
     elif platform.system() == "Linux":
-        subprocess.run(["./limine/limine", "bios-install", "bin/iso/AtomOS.iso"])
+        subprocess.run(["./lib/limine/limine", "bios-install", "bin/iso/AtomOS.iso"])
 
 useQemu = input("Would you like to run QEMU? (y/n): ")
 if (useQemu.replace(" ", "") != "y" and useQemu.replace(" ", "") != "n"):
