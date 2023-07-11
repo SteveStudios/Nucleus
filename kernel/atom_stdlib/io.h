@@ -22,7 +22,7 @@ enum {
 };
 
 // Write a string to video memory, default color is white
-inline void println(const char* str, int col = 15) {
+void println(const char* str, int col) {
     volatile char *vmem = (volatile char*)0xB8000;
     while (*str != 0) {
         *vmem++ = *str++;

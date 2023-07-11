@@ -3,7 +3,7 @@
 
 #include <stdint.h>
 
-inline uint64_t global_dt[] =
+uint64_t global_dt[] =
 {
     0x0000000000000000,
     0x00009a000000ffff,
