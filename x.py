@@ -1,3 +1,6 @@
+# x.py - AtomOS Build Script
+# Created 2023/7/10 by Stephen Byrne
+
 import os
 import platform
 from shutil import rmtree
