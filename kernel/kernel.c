@@ -8,7 +8,7 @@
 #include "atom_stdlib/io.h"
 #include "atom_stdlib/utils.h"
 
-#include "drivers/idt.h"
+#include "data/idt.h"
 #include "drivers/apic.h"
 
 // First actions the kernel takes after starting up

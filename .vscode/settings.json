@@ -14,6 +14,10 @@
         "utils.h": "c",
         "io.h": "c",
         "str.h": "c",
-        "idt.h": "c"
+        "idt.h": "c",
+        "keyboardps2.h": "c",
+        "__config": "c",
+        "istream": "c",
+        "locale": "c"
     }
 }
