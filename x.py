@@ -12,7 +12,6 @@ supportedExtensions = [".c", ".asm", ".s"]
 linkerScriptName = "link.ld"
 
 filesToCompile = []
-
 print("----------------------------------------------")
 print("             The AtomOS Builder               ")
 print(" Authors: Stephen Byrne, The Python Foundation")

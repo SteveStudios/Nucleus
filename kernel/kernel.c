@@ -5,6 +5,7 @@
 #include <stddef.h>
 #include <stdbool.h>
 
+#include "atom_stdlib/io.h"
 #include "../limine/limine.h"
  
 static volatile struct limine_framebuffer_request framebuffer_request = 
@@ -15,7 +16,7 @@ static volatile struct limine_framebuffer_request framebuffer_request =
 
 // First actions the kernel takes after starting up
 void kernel_awake(void) {
-    
+    println("Hello, world!");
 }
 
 // Clear interrupts and halt
