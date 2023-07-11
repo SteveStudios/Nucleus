@@ -9,28 +9,11 @@
 extern "C" {
 #endif
 
-uint16_t get_bios_monitor(void)
-{
-    return *((uint16_t*) 0x410);
-}
+uint16_t get_bios_monitor(void);
 
-// A monochrome monitor?
-bool is_mono()
-{
-    return ((get_bios_monitor() & 0x30) == 0x30);
-}
-
-// A colour monitor?
-bool is_col()
-{
-    return ((get_bios_monitor() & 0x30) == 0x20);
-}
-
-// No monitor, or a nonexistent one?
-bool is_unknown()
-{
-    return ((get_bios_monitor() & 0x30) == 0x00);
-}
+bool is_mono();
+bool is_col();
+bool is_unknown();
 
 #ifdef __cplusplus
 }

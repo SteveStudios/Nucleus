@@ -8,9 +8,13 @@
 #include "atom_stdlib/io.h"
 #include "atom_stdlib/utils.h"
 
+#include "drivers/idt.h"
+#include "drivers/apic.h"
+
 // First actions the kernel takes after starting up
 void kernel_awake(void) {
-    println("Hello, world!");
+    idt_init();
+    apic_init();
 }
 
 // Clear interrupts and halt
@@ -25,8 +29,6 @@ void kernel_hang(void) {
 void kernel_update(void) {
     while (__active)
     {
-        if (framebuffer_request.response == NULL || framebuffer_request.response->framebuffer_count < 1) 
-            kernel_hang();
     }
 }
 
@@ -34,4 +36,6 @@ void kernel_update(void) {
 void kernel_enter(void) {
     kernel_awake();
     kernel_update();
+    if (framebuffer_request.response == NULL || framebuffer_request.response->framebuffer_count < 1) 
+        kernel_hang();
 }

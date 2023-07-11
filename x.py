@@ -36,9 +36,8 @@ if (not os.path.exists("bin/iso/EFI/BOOT")):
 
 for ext in supportedExtensions:
     for file in glob.iglob('**/*' + ext, recursive=True):
-        print(file)
         if (not ("." + file.split(".")[1]) in supportedExtensions): continue
-        if os.path.isdir(file) or file.startswith("lib/"): continue
+        if os.path.isdir(file) or file.endswith("/limine.c"): continue
         match ext:
             case ".c":
                 subprocess.run(["x86_64-elf-gcc", "-Wall", "-Wextra", "-std=gnu11", "-ffreestanding", "-fno-stack-protector",
@@ -57,8 +56,14 @@ for ext in supportedExtensions:
                 subprocess.run(["nasm", "-Wall", "-felf64", "-o", "bin/obj/" + file.split(".")[0] + ".o"])
         filesToCompile.append(file.split("/")[len(file.split("/")) - 1].split(".")[0] + ".o")
 
-subprocess.run(["x86_64-elf-ld", "bin/obj/" + (" bin/obj/".join(filesToCompile)), "-o", "bin/iso/AtomOS.elf", "-m", "elf_x86_64", "-nostdlib", "-static", "-pie",
-                "--no-dynamic-linker", "-ztext", "-zmax-page-size=0x1000", "-T", linkerScriptName])
+argArr = ["x86_64-elf-ld", "-o", "bin/iso/AtomOS.elf"]
+
+for file in filesToCompile:
+    argArr.append("bin/obj/" + file)
+for endingArg in ["-m", "elf_x86_64", "-nostdlib", "-static", "-pie", "--no-dynamic-linker", "-ztext", "-zmax-page-size=0x1000", "-T", linkerScriptName]:
+    argArr.append(endingArg)
+
+subprocess.run(argArr)
 
 if (os.path.exists("bin/iso")):
     cfgContents = open("temp/limine.cfg")

@@ -10,6 +10,10 @@
         "ostream": "c",
         "sstream": "c",
         "flanterm.h": "c",
-        "fb.h": "c"
+        "fb.h": "c",
+        "utils.h": "c",
+        "io.h": "c",
+        "str.h": "c",
+        "idt.h": "c"
     }
 }

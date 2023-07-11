@@ -124,7 +124,7 @@ struct flanterm_context *flanterm_fb_init(
 );
 
 #ifndef FLANTERM_FB_DISABLE_BUMP_ALLOC
-struct flanterm_context *flanterm_fb_simple_init(
+static inline struct flanterm_context *flanterm_fb_simple_init(
     uint32_t *framebuffer, size_t width, size_t height, size_t pitch
 ) {
     return flanterm_fb_init(
