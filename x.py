@@ -96,6 +96,6 @@ if (useQemu.replace(" ", "") != "y" and useQemu.replace(" ", "") != "n"):
 
 match useQemu.replace(" ", ""):
     case "y":
-        subprocess.run(["qemu-system-x86_64" "-boot" "d" "-cdrom" '"bin/iso/AtomOS.iso"' "-m" "2048"])
+        subprocess.run(["qemu-system-x86_64", "-boot", "d", "-cdrom", 'bin/iso/AtomOS.iso', "-m", "2048"])
     case "n":
         exit(0)
