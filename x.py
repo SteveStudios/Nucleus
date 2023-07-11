@@ -4,6 +4,7 @@
 import os
 import platform
 from shutil import rmtree
+from time import sleep
 import subprocess
 import glob
 
@@ -12,8 +13,12 @@ linkerScriptName = "link.ld"
 
 filesToCompile = []
 
-print("--The AtomOS Builder--")
-print("  Authors: Stephen Byrne, The Python Foundation")
+print("----------------------------------------------")
+print("             The AtomOS Builder               ")
+print(" Authors: Stephen Byrne, The Python Foundation")
+print("----------------------------------------------")
+
+sleep(1.5)
 
 if (os.path.exists("bin/iso")):
     rmtree("bin/iso")
