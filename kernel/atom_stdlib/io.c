@@ -11,6 +11,7 @@ static volatile struct limine_framebuffer_request framebuffer_request =
 bool initialized = false;
 struct flanterm_context* ft_ctx;
 
+// Get the flanterm context; if it does not exist, initialize it 
 struct flanterm_context* get_ft_ctx()
 {
     if (!initialized)
@@ -24,6 +25,7 @@ struct flanterm_context* get_ft_ctx()
     return ft_ctx;
 }
 
+// Clear the terminal by reinitializing the flanterm context
 void clear_term()
 {
     ft_ctx = flanterm_fb_simple_init((uint32_t*)framebuffer_request.response->framebuffers[0]->address, 
