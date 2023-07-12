@@ -9,12 +9,12 @@
 #include "atom_stdlib/utils.h"
 
 #include "data/idt.h"
-#include "drivers/apic.h"
+
+#include "drivers/keyboardps2.h"
 
 // First actions the kernel takes after starting up
 void kernel_awake(void) {
     idt_init();
-    apic_init();
 }
 
 // Clear interrupts and halt
@@ -29,6 +29,8 @@ void kernel_hang(void) {
 void kernel_update(void) {
     while (__active)
     {
+        if (get_key() == '3')
+            println("3 was pressed");
     }
 }
 

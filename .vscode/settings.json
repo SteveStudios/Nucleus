@@ -18,6 +18,7 @@
         "keyboardps2.h": "c",
         "__config": "c",
         "istream": "c",
-        "locale": "c"
+        "locale": "c",
+        "apic.h": "c"
     }
 }

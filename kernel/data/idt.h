@@ -4,14 +4,14 @@
 #pragma once
 
 #include <stdint.h>
+#include "../atom_stdlib/io.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
 void idt_setgate(int gate, uint32_t val);
-
-void init();
+void idt_init();
 
 #ifdef __cplusplus
 }

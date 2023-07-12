@@ -53,7 +53,7 @@ for ext in supportedExtensions:
                                 "-mno-sse2",
                                 "-mno-red-zone", "-c", file, "-o", "bin/obj/" + file.split("/")[len(file.split(".")[0].split("/")) - 1].split(".")[0] + ".o"])
             case ".asm" | ".s":
-                subprocess.run(["nasm", "-Wall", "-felf64", "-o", "bin/obj/" + file.split(".")[0] + ".o"])
+                subprocess.run(["nasm", "-Wall", "-felf64", "-o", "bin/obj/" + file.split("/")[len(file.split(".")[0].split("/")) - 1].split(".")[0] + ".o", file])
         filesToCompile.append(file.split("/")[len(file.split("/")) - 1].split(".")[0] + ".o")
 
 argArr = ["x86_64-elf-ld", "-o", "bin/iso/AtomOS.elf"]

@@ -22,7 +22,7 @@ uint64_t global_dt[] =
     0x00aff3000000ffff
 };
 
-bool __active = false;
+bool __active = true;
 
 #ifdef __cplusplus
 }
