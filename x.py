@@ -13,8 +13,7 @@ linkerScriptName = "link.ld"
 
 filesToCompile = []
 print("----------------------------------------------")
-print("             The AtomOS Builder               ")
-print(" Authors: Stephen Byrne, The Python Foundation")
+print("            The AtomOS Builder               ")
 print("----------------------------------------------")
 
 sleep(1.5)
