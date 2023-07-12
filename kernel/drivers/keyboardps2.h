@@ -14,7 +14,7 @@ extern "C" {
 
 struct key_t
 {
-    char m_key;
+    char* m_key;
     bool released;
 };
 

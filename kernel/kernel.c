@@ -6,9 +6,9 @@
 #include <stdbool.h>
 
 #include "atom_stdlib/io.h"
-#include "atom_stdlib/utils.h"
+#include "data/utils.h"
 
-#include "data/idt.h"
+#include "data/idt/idt.h"
 
 #include "drivers/keyboardps2.h"
 
@@ -29,7 +29,7 @@ void kernel_hang(void) {
 void kernel_update(void) {
     while (__active)
     {
-        if (get_key().m_key == '3')
+        if (get_key().m_key == (char*)'3')
             println("3 was pressed");
     }
 }
