@@ -12,7 +12,7 @@
 extern "C" {
 #endif
 
-typedef struct key_t
+struct key_t
 {
     char m_key;
     bool released;
