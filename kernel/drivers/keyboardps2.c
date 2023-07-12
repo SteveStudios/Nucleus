@@ -21,7 +21,7 @@ char key_from_uint8_t(uint8_t k)
     return kc;
 }
 
-// Get the currently pressed key, returns a null character if nothing was found
+// Get the current pressed key, returns a null character if nothing was found
 char get_key()
 {
     uint8_t k = 0;

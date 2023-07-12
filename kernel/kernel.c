@@ -1,4 +1,4 @@
-// kernel.c - Contains kernel entry point
+// kernel.c - The main kernel manager
 // Created 2023/7/10 by Stephen Byrne
 
 #include <stdint.h>

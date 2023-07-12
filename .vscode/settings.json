@@ -19,6 +19,7 @@
         "__config": "c",
         "istream": "c",
         "locale": "c",
-        "apic.h": "c"
+        "apic.h": "c",
+        "ports.h": "c"
     }
 }
