@@ -4,12 +4,22 @@
 #pragma once
 
 #include <stdint.h>
+#include <stdbool.h>
+
+#include "../atom_stdlib/ports.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-char get_key();
+typedef struct key_t
+{
+    char m_key;
+    bool released;
+};
+
+struct key_t get_key();
+
 
 #ifdef __cplusplus
 }

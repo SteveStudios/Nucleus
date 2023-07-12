@@ -1,4 +1,4 @@
-// ports.c - In and out commands, which are useful for making pretty much every device driver
+// ports.c - In and out commands, which are useful for creating any device driver
 // Created 2023/7/11 by Stephen Byrne
 
 #include "ports.h"

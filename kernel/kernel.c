@@ -29,7 +29,7 @@ void kernel_hang(void) {
 void kernel_update(void) {
     while (__active)
     {
-        if (get_key() == '3')
+        if (get_key().m_key == '3')
             println("3 was pressed");
     }
 }
