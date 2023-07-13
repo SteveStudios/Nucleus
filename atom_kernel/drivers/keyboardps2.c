@@ -8,7 +8,7 @@ struct key_t key_from_uint8_t(uint8_t k)
 {
     char* kc;
     struct key_t k_s;
-
+    
     switch (k)
     {
         case 0x04:
@@ -102,10 +102,25 @@ struct key_t key_from_uint8_t(uint8_t k)
             break;
 
         case 0x4C:
-            kc = (char*)"kp_8";
+            kc = (char*)"kp_5";
             k_s.released = false;
             break;
-            
+
+        case 0x50:
+            kc = (char*)"kp_2";
+            k_s.released = false;
+            break;  
+
+        case 0x57:
+            kc = (char*)"f11";
+            k_s.released = false;
+            break;   
+
+        case 0x58:
+            kc = (char*)"f12";
+            k_s.released = false;
+            break;   
+
         default:
             break;
     }
@@ -116,8 +131,10 @@ struct key_t key_from_uint8_t(uint8_t k)
 // Get the current pressed key, returns a null character if nothing was found
 struct key_t get_key()
 {
+    // Key scancode
     uint8_t k = 0;
-    if(inb(0x64) & 1)
+    
+    if (inb(0x64) & 1)
     {
 		k = inb(0x60);
         return key_from_uint8_t(k);

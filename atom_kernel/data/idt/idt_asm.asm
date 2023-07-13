@@ -107,7 +107,7 @@ irq_e:
     mov ax, ds
     PUSH rax
 
-    ; Add parameters to print_e, which we are about to call
+    ; Add parameters to irq_handler, which we are about to call
     mov ax, 0x10
     mov ds, ax
     mov es, ax
