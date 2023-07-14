@@ -4,8 +4,8 @@
 #pragma once
 
 #include <stdint.h>
-#include "../../atom_stdlib/io.h"
-#include "../../atom_stdlib/ports.h"
+#include "../../stdlib/io.h"
+#include "../../stdlib/ports.h"
 
 #ifdef __cplusplus
 extern "C" {

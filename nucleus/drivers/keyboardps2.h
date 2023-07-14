@@ -6,7 +6,7 @@
 #include <stdint.h>
 #include <stdbool.h>
 
-#include "../atom_stdlib/ports.h"
+#include "../stdlib/ports.h"
 
 #ifdef __cplusplus
 extern "C" {

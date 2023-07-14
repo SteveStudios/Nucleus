@@ -5,7 +5,7 @@
 #include <stddef.h>
 #include <stdbool.h>
 
-#include "atom_stdlib/io.h"
+#include "stdlib/io.h"
 #include "data/utils.h"
 
 #include "data/idt/idt.h"
