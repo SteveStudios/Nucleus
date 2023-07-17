@@ -8,6 +8,7 @@
 #include "stdlib/io.h"
 #include "stdlib/utils.h"
 
+
 #include "drivers/keyboardps2.h"
 
 // First actions the kernel takes after starting up
@@ -26,8 +27,7 @@ void kernel_hang(void) {
 void kernel_update(void) {
     while (__active)
     {
-        if (get_key().m_key == (char*)'3')
-            println("3 was pressed");
+        char* allowed = "abcdefghijklmnopqrstuvwxyz1234567890";
     }
 }
 
@@ -35,4 +35,6 @@ void kernel_update(void) {
 void kernel_enter(void) {
     kernel_awake();
     kernel_update();
+    if (framebuffer_request.response == NULL || framebuffer_request.response->framebuffer_count < 1) 
+        kernel_hang();
 }

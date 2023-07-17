@@ -7,6 +7,7 @@
 #include <stdbool.h>
 
 #include "../stdlib/ports.h"
+#include "../stdlib/io.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -19,7 +20,6 @@ struct key_t
 };
 
 struct key_t get_key();
-
 
 #ifdef __cplusplus
 }

@@ -6,7 +6,7 @@
 // Last recorded scancode
 uint8_t last_key;
 
-// Translate key from 'uint8_t' to 'char'
+// Translate key from "uint8_t" to "char"
 struct key_t key_from_uint8_t(uint8_t k)
 {
     char *kc;
@@ -16,7 +16,7 @@ struct key_t key_from_uint8_t(uint8_t k)
     {
     case 0x04:
     case 0x84:
-        kc = (char *)'3';
+        kc = (char *)"3";
         if (k == 0x04)
             k_s.released = false;
         else
@@ -25,7 +25,7 @@ struct key_t key_from_uint8_t(uint8_t k)
 
     case 0x08:
     case 0x88:
-        kc = (char *)'7';
+        kc = (char *)"7";
         if (k == 0x08)
             k_s.released = false;
         else
@@ -34,7 +34,7 @@ struct key_t key_from_uint8_t(uint8_t k)
 
     case 0x0C:
     case 0x8C:
-        kc = (char *)'-';
+        kc = (char *)"-";
         if (k == 0x0C)
             k_s.released = false;
         else
@@ -45,13 +45,13 @@ struct key_t key_from_uint8_t(uint8_t k)
         if (last_key == 0xE0)
             kc = (char *)"ptrack";
         else
-            kc = (char *)'q';
+            kc = (char *)"q";
         k_s.released = false;
         break;
 
     case 0x14:
     case 0x94:
-        kc = (char *)'t';
+        kc = (char *)"t";
         if (k == 0x14)
             k_s.released = false;
         else
@@ -60,7 +60,7 @@ struct key_t key_from_uint8_t(uint8_t k)
 
     case 0x18:
     case 0x98:
-        kc = (char *)'o';
+        kc = (char *)"o";
         if (k == 0x18)
             k_s.released = false;
         else
@@ -84,7 +84,7 @@ struct key_t key_from_uint8_t(uint8_t k)
         if (last_key == 0xE0)
             kc = (char *)"mute";
         else
-            kc = (char *)'d';
+            kc = (char *)"d";
         if (k == 0x20)
             k_s.released = false;
         else
@@ -96,7 +96,7 @@ struct key_t key_from_uint8_t(uint8_t k)
         if (last_key == 0xE0)
             kc = (char *)"stop";
         else
-            kc = (char *)'j';
+            kc = (char *)"j";
         if (k == 0x24)
             k_s.released = false;
         else
@@ -105,7 +105,7 @@ struct key_t key_from_uint8_t(uint8_t k)
 
     case 0x28: 
     case 0xA8:
-        kc = (char *)'\'';
+        kc = (char *)"\\";
         if (k == 0x28)
             k_s.released = false;
         else
@@ -114,7 +114,7 @@ struct key_t key_from_uint8_t(uint8_t k)
 
     case 0x2C:
     case 0xAC:
-        kc = (char *)'z';
+        kc = (char *)"z";
         if (k == 0x2C)
             k_s.released = false;
         else
@@ -126,7 +126,7 @@ struct key_t key_from_uint8_t(uint8_t k)
         if (last_key == 0xE0)
             kc = (char *)"vol_up";
         else
-            kc = (char *)'b';
+            kc = (char *)"b";
         if (k == 0x30)
             k_s.released = false;
         else
@@ -135,7 +135,7 @@ struct key_t key_from_uint8_t(uint8_t k)
 
     case 0x34:
     case 0xB4:
-        kc = (char *)'.';
+        kc = (char *)".";
         if (k == 0x34)
             k_s.released = false;
         else
@@ -232,12 +232,10 @@ struct key_t key_from_uint8_t(uint8_t k)
             k_s.released = true;
         break;
 
-    case 0x81:
     case 0x01:
-        if (last_key == 0xE0)
-            kc = (char *)"esc";
-        else kc = (char *)'4';
-        if (k == 0x81)
+    case 0x81:
+        kc = (char *)"esc";
+        if (k == 0x01)
             k_s.released = false;
         else
             k_s.released = true;
@@ -247,7 +245,7 @@ struct key_t key_from_uint8_t(uint8_t k)
         if (last_key == 0xE0)
             kc = (char *)"prev_track";
         else
-            kc = (char *)'1';
+            kc = (char *)"1";
         k_s.released = true;
         break;
 
@@ -256,7 +254,7 @@ struct key_t key_from_uint8_t(uint8_t k)
         if (last_key == 0xE0)
             kc = (char *)"n_track";
         else
-            kc = (char *)'p';
+            kc = (char *)"p";
         if (k == 0x19)
             k_s.released = false;
         else
@@ -268,7 +266,7 @@ struct key_t key_from_uint8_t(uint8_t k)
         if (last_key == 0xE0)
             kc = (char *)"vol_dwn";
         else
-            kc = (char *)'c';
+            kc = (char *)"c";
         if (k == 0x2E)
             k_s.released = false;
         else
@@ -280,7 +278,7 @@ struct key_t key_from_uint8_t(uint8_t k)
         if (last_key == 0xE0)
             kc = (char *)"kp_/";
         else
-            kc = (char *)'/';
+            kc = (char *)"/";
         if (k == 0x35)
             k_s.released = false;
         else
@@ -304,7 +302,7 @@ struct key_t key_from_uint8_t(uint8_t k)
         if (last_key == 0xE0)
             kc = (char *)"mouse_r";
         else
-            kc = (char *)'6';
+            kc = (char *)"6";
         if (k == 0x4D)
             k_s.released = false;
         else
@@ -382,7 +380,7 @@ struct key_t key_from_uint8_t(uint8_t k)
 
     case 0x09:
     case 0x89:
-        kc = (char *)'8';
+        kc = (char *)"8";
         if (k == 0x09)
             k_s.released = false;
         else
@@ -391,7 +389,7 @@ struct key_t key_from_uint8_t(uint8_t k)
 
     case 0x0D:
     case 0x8D:
-        kc = (char *)'=';
+        kc = (char *)"=";
         if (k == 0x0D)
             k_s.released = false;
         else
@@ -400,7 +398,7 @@ struct key_t key_from_uint8_t(uint8_t k)
 
     case 0x11:
     case 0x91:
-        kc = (char *)'w';
+        kc = (char *)"w";
         if (k == 0x11)
             k_s.released = false;
         else
@@ -409,7 +407,7 @@ struct key_t key_from_uint8_t(uint8_t k)
 
     case 0x15:
     case 0x95:
-        kc = (char *)'y';
+        kc = (char *)"y";
         if (k == 0x15)
             k_s.released = false;
         else
@@ -431,9 +429,9 @@ struct key_t key_from_uint8_t(uint8_t k)
     case 0x21:
     case 0xA1:
         if (last_key == 0xE0)
-            kc = (char *)'f';
-        else
             kc = (char *)"calc";
+        else
+            kc = (char *)"f";
         if (k == 0x21)
             k_s.released = false;
         else
@@ -442,7 +440,7 @@ struct key_t key_from_uint8_t(uint8_t k)
 
     case 0x25:
     case 0xA5:
-        kc = (char *)'k';
+        kc = (char *)"k";
         if (k == 0x25)
             k_s.released = false;
         else
@@ -451,7 +449,7 @@ struct key_t key_from_uint8_t(uint8_t k)
 
     case 0x29:
     case 0xA9:
-        kc = (char *)'`';
+        kc = (char *)"`";
         if (k == 0x29)
             k_s.released = false;
         else
@@ -460,7 +458,7 @@ struct key_t key_from_uint8_t(uint8_t k)
 
     case 0x2D:
     case 0xAD:
-        kc = (char *)'x';
+        kc = (char *)"x";
         if (k == 0x2D)
             k_s.released = false;
         else
@@ -470,7 +468,7 @@ struct key_t key_from_uint8_t(uint8_t k)
     case 0x31:
     case 0xB1:
         if (last_key == 0xE0)
-            kc = (char *)'n';
+            kc = (char *)"n";
         else kc = (char *)"f7";
         if (k == 0x31)
             k_s.released = false;
@@ -480,7 +478,7 @@ struct key_t key_from_uint8_t(uint8_t k)
 
     case 0x39:
     case 0xB9:
-        kc = (char *)' ';
+        kc = (char *)" ";
         if (k == 0x39)
             k_s.released = false;
         else
@@ -508,7 +506,7 @@ struct key_t key_from_uint8_t(uint8_t k)
     case 0x49:
     case 0xC9:
         if (last_key == 0xE0)
-            kc = (char *)'9';
+            kc = (char *)"9";
         else
             kc = (char *)"pg_up";
         if (k == 0x49)
@@ -520,7 +518,7 @@ struct key_t key_from_uint8_t(uint8_t k)
     case 0x51:
     case 0xD1:
         if (last_key == 0xE0)
-            kc = (char *)'3';
+            kc = (char *)"3";
         else
             kc = (char *)"pg_dwn";
         if (k == 0x51)
@@ -540,7 +538,7 @@ struct key_t key_from_uint8_t(uint8_t k)
 
     case 0x02:
     case 0x82:
-        kc = (char *)'1';
+        kc = (char *)"1";
         if (k == 0x02)
             k_s.released = false;
         else
@@ -549,7 +547,7 @@ struct key_t key_from_uint8_t(uint8_t k)
 
     case 0x06:
     case 0x86:
-        kc = (char *)'5';
+        kc = (char *)"5";
         if (k == 0x06)
             k_s.released = false;
         else
@@ -558,7 +556,7 @@ struct key_t key_from_uint8_t(uint8_t k)
 
     case 0x0A:
     case 0x8A:
-        kc = (char *)'9';
+        kc = (char *)"9";
         if (k == 0x0A)
             k_s.released = false;
         else
@@ -576,7 +574,7 @@ struct key_t key_from_uint8_t(uint8_t k)
 
     case 0x12:
     case 0x92:
-        kc = (char *)'e';
+        kc = (char *)"e";
         if (k == 0x12)
             k_s.released = false;
         else
@@ -585,7 +583,7 @@ struct key_t key_from_uint8_t(uint8_t k)
 
     case 0x16:
     case 0x96:
-        kc = (char *)'u';
+        kc = (char *)"u";
         if (k == 0x16)
             k_s.released = false;
         else
@@ -594,7 +592,7 @@ struct key_t key_from_uint8_t(uint8_t k)
 
     case 0x1A:
     case 0x9A:
-        kc = (char *)'[';
+        kc = (char *)"[";
         if (k == 0x1A)
             k_s.released = false;
         else
@@ -603,7 +601,7 @@ struct key_t key_from_uint8_t(uint8_t k)
 
     case 0x1E:
     case 0x9E:
-        kc = (char *)'a';
+        kc = (char *)"a";
         if (k == 0x1A)
             k_s.released = false;
         else
@@ -615,7 +613,7 @@ struct key_t key_from_uint8_t(uint8_t k)
         if (last_key == 0xE0)
             kc = (char *)"play";
         else
-            kc = (char *)'g';
+            kc = (char *)"g";
         if (k == 0x22)
             k_s.released = false;
         else
@@ -624,7 +622,7 @@ struct key_t key_from_uint8_t(uint8_t k)
 
     case 0x26:
     case 0xA6:
-        kc = (char *)'l';
+        kc = (char *)"l";
         if (k == 0x26)
             k_s.released = false;
         else
@@ -645,7 +643,7 @@ struct key_t key_from_uint8_t(uint8_t k)
         if (last_key == 0xE0)
             kc = (char *)"www_home";
         else
-            kc = (char *)'m';
+            kc = (char *)"m";
         if (k == 0x32)
             k_s.released = false;
         else
@@ -754,7 +752,7 @@ struct key_t key_from_uint8_t(uint8_t k)
 
     case 0x03:
     case 0x83:
-        kc = (char *)'2';
+        kc = (char *)"2";
         if (k == 0x03)
             k_s.released = false;
         else
@@ -763,7 +761,7 @@ struct key_t key_from_uint8_t(uint8_t k)
 
     case 0x07:
     case 0x87:
-        kc = (char *)'6';
+        kc = (char *)"6";
         if (k == 0x07)
             k_s.released = false;
         else
@@ -772,7 +770,7 @@ struct key_t key_from_uint8_t(uint8_t k)
 
     case 0x0B:
     case 0x8B:
-        kc = (char *)'0';
+        kc = (char *)"0";
         if (k == 0x0B)
             k_s.released = false;
         else
@@ -790,7 +788,7 @@ struct key_t key_from_uint8_t(uint8_t k)
 
     case 0x13:
     case 0x93:
-        kc = (char *)'r';
+        kc = (char *)"r";
         if (k == 0x13)
             k_s.released = false;
         else
@@ -799,7 +797,7 @@ struct key_t key_from_uint8_t(uint8_t k)
 
     case 0x17:
     case 0x97:
-        kc = (char *)'i';
+        kc = (char *)"i";
         if (k == 0x17)
             k_s.released = false;
         else
@@ -808,7 +806,7 @@ struct key_t key_from_uint8_t(uint8_t k)
 
     case 0x1B:
     case 0x9B:
-        kc = (char *)']';
+        kc = (char *)"]";
         if (k == 0x1B)
             k_s.released = false;
         else
@@ -817,7 +815,7 @@ struct key_t key_from_uint8_t(uint8_t k)
 
     case 0x1F:
     case 0x9F:
-        kc = (char *)'s';
+        kc = (char *)"s";
         if (k == 0x1F)
             k_s.released = false;
         else
@@ -826,7 +824,7 @@ struct key_t key_from_uint8_t(uint8_t k)
 
     case 0x23:
     case 0xA3:
-        kc = (char *)'h';
+        kc = (char *)"h";
         if (k == 0x23)
             k_s.released = false;
         else
@@ -835,7 +833,7 @@ struct key_t key_from_uint8_t(uint8_t k)
 
     case 0x27:
     case 0xA7:
-        kc = (char *)';';
+        kc = (char *)";";
         if (k == 0x27)
             k_s.released = false;
         else
@@ -844,7 +842,7 @@ struct key_t key_from_uint8_t(uint8_t k)
 
     case 0x2B:
     case 0xAB:
-        kc = (char *)'\\';
+        kc = (char *)"\\";
         if (k == 0x2B)
             k_s.released = false;
         else
@@ -853,7 +851,7 @@ struct key_t key_from_uint8_t(uint8_t k)
 
     case 0x2F:
     case 0xAF:
-        kc = (char *)'v';
+        kc = (char *)"v";
         if (k == 0x2F)
             k_s.released = false;
         else
@@ -862,7 +860,7 @@ struct key_t key_from_uint8_t(uint8_t k)
 
     case 0x33:
     case 0xB3:
-        kc = (char *)',';
+        kc = (char *)",";
         if (k == 0x33)
             k_s.released = false;
         else
@@ -956,6 +954,15 @@ struct key_t key_from_uint8_t(uint8_t k)
             k_s.released = true;
         break;
 
+    case 0x05:
+    case 0x85:
+        kc = (char *)"4";
+        if (k == 0x05)
+            k_s.released = false;
+        else
+            k_s.released = true;
+        break;
+
     default:
         break;
     }
@@ -979,7 +986,7 @@ struct key_t get_key()
     }
 
     struct key_t k_s;
-    k_s.m_key = (char *)'\0';
+    k_s.m_key = (char *)"\0";
 
     return k_s;
 }

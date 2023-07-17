@@ -8,6 +8,7 @@ extern "C" {
 #endif
 
 int strlen(const char* str);
+int strcmp(const char * s1, const char * s2);
 
 #ifdef __cplusplus
 }

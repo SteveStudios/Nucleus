@@ -20,6 +20,8 @@
         "istream": "c",
         "locale": "c",
         "apic.h": "c",
-        "ports.h": "c"
+        "ports.h": "c",
+        "idt_handlers.h": "c",
+        "idt_setup.h": "c"
     }
 }
