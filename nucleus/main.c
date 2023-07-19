@@ -8,11 +8,12 @@
 #include "stdlib/io.h"
 #include "stdlib/utils.h"
 
-
 #include "drivers/keyboardps2.h"
 
 // First actions the kernel takes after starting up
 void kernel_awake(void) {
+    const char* logo = "  _   _            _\n| \\ | |_   _  ___| | ___ _   _ ___\n|  \\| | | | |/ __| |/ _ \\ | | / __|\n| |\\  | |_| | (__| |  __/ |_| \\__ \\\n|_| \\_|\\__,_|\\___|_|\\___|\\__,_|___/";
+    println(logo);
 }
 
 // Clear interrupts and halt
@@ -27,7 +28,7 @@ void kernel_hang(void) {
 void kernel_update(void) {
     while (__active)
     {
-        char* allowed = "abcdefghijklmnopqrstuvwxyz1234567890";
+        char* allowed_chars = "abcdefghijklmnopqrstuvwxyz1234567890|~#$%()*+-:;<=>@[]^_.,'!?";
     }
 }
 
