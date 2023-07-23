@@ -1,2 +1,2 @@
-# AtomOS
-The AtomOS kernel ("Nucleus") and all of the bells and whistles on top.
+# Nucleus
+A work-in-progress, modern, x86_64 kernel.
