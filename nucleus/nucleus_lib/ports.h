@@ -10,6 +10,8 @@ extern "C" {
 unsigned char inb(unsigned short port);
 void outb(unsigned short port, unsigned char value);
 
+void io_wait();
+
 #ifdef __cplusplus
 }
 #endif

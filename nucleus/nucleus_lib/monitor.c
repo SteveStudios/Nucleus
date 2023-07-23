@@ -20,7 +20,7 @@ bool is_col()
     return ((get_bios_monitor() & 0x30) == 0x20);
 }
 
-// No monitor, or a nonexistent one?
+// No monitor, or an unknown one?
 bool is_unknown()
 {
     return ((get_bios_monitor() & 0x30) == 0x00);

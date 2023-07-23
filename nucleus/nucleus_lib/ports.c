@@ -16,3 +16,8 @@ void outb(unsigned short port, unsigned char value)
 {
     asm volatile("out %%al, %%dx" : : "a"(value), "d"(port) : "memory");
 }
+
+void io_wait()
+{
+    outb(0x80, 0);
+}

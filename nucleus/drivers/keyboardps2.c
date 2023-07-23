@@ -4,13 +4,16 @@
 #include "keyboardps2.h"
 
 // Last recorded scancode
-uint8_t last_key;
+uint8_t last_key = 0;
 
 // Translate key from "uint8_t" to "char"
-struct key_t key_from_uint8_t(uint8_t k)
+struct key_t key_from_uint8_t(uint8_t k, bool update_last_key)
 {
-    char *kc;
+    char *kc = "\0";
     struct key_t k_s;
+
+    k_s.i_key = k;
+    if (update_last_key) k_s.last_key = last_key;
 
     switch (k)
     {
@@ -70,7 +73,7 @@ struct key_t key_from_uint8_t(uint8_t k)
     case 0x1C: 
     case 0x9C:
         if (last_key == 0xE0)
-            kc = (char *)"kp_enter";
+            kc = (char *)"enter";
         else
             kc = (char *)"enter";
         if (k == 0x1C)
@@ -186,7 +189,7 @@ struct key_t key_from_uint8_t(uint8_t k)
         if (last_key == 0xE0)
             kc = (char *)"mouse_up";
         else
-            kc = (char *)"kp_8";
+            kc = (char *)"8";
         if (k == 0x48)
             k_s.released = false;
         else
@@ -195,7 +198,7 @@ struct key_t key_from_uint8_t(uint8_t k)
 
     case 0x4C:
     case 0xCC:
-        kc = (char *)"kp_5";
+        kc = (char *)"5";
         if (k == 0x4C)
             k_s.released = false;
         else
@@ -207,7 +210,7 @@ struct key_t key_from_uint8_t(uint8_t k)
         if (last_key == 0xE0)
             kc = (char *)"mouse_dwn";
         else
-            kc = (char *)"kp_2";
+            kc = (char *)"2";
         if (k == 0x50)
             k_s.released = false;
         else
@@ -276,7 +279,7 @@ struct key_t key_from_uint8_t(uint8_t k)
     case 0x35:
     case 0xB5:
         if (last_key == 0xE0)
-            kc = (char *)"kp_/";
+            kc = (char *)"/";
         else
             kc = (char *)"/";
         if (k == 0x35)
@@ -290,7 +293,7 @@ struct key_t key_from_uint8_t(uint8_t k)
         if (last_key == 0xE0)
             kc = (char *)"home";
         else
-            kc = (char *)"kp_7";
+            kc = (char *)"7";
         if (k == 0x47)
             k_s.released = false;
         else
@@ -697,7 +700,7 @@ struct key_t key_from_uint8_t(uint8_t k)
 
     case 0x4A:
     case 0xCA:
-        kc = (char *)"kp_-";
+        kc = (char *)"-";
         if (k == 0x4A)
             k_s.released = false;
         else
@@ -706,7 +709,7 @@ struct key_t key_from_uint8_t(uint8_t k)
 
     case 0x4E:
     case 0xCE:
-        kc = (char *)"kp_+";
+        kc = (char *)"+";
         if (k == 0x4E)
             k_s.released = false;
         else
@@ -869,7 +872,7 @@ struct key_t key_from_uint8_t(uint8_t k)
 
     case 0x37:
     case 0xB7:
-        kc = (char *)"kp_*";
+        kc = (char *)"*";
         if (k == 0x37)
             k_s.released = false;
         else
@@ -906,7 +909,7 @@ struct key_t key_from_uint8_t(uint8_t k)
     case 0x4B:
     case 0xCB:
         if (last_key == 0xE0)
-            kc = (char *)"kp_4";
+            kc = (char *)"4";
         else
             kc = (char *)"mouse_l";
         if (k == 0x4B)
@@ -920,7 +923,7 @@ struct key_t key_from_uint8_t(uint8_t k)
         if (last_key == 0xE0)
             kc = (char *)"end";
         else
-            kc = (char *)"kp_1";
+            kc = (char *)"1";
         if (k == 0x4F)
             k_s.released = false;
         else
@@ -967,7 +970,7 @@ struct key_t key_from_uint8_t(uint8_t k)
         break;
     }
 
-    last_key = k;
+    if (update_last_key) last_key = k;
     k_s.m_key = kc;
 
     return k_s;
@@ -979,14 +982,22 @@ struct key_t get_key()
     // Key scancode
     uint8_t k = 0;
 
-    if (inb(0x64) & 1)
-    {
-        k = inb(0x60);
-        return key_from_uint8_t(k);
-    }
-
+    // Key struct
     struct key_t k_s;
+
+    k_s.i_key = k;
     k_s.m_key = (char *)"\0";
+    k_s.last_key = 0;
+
+    k = inb(0x60);
+
+    struct key_t temp = key_from_uint8_t(k, true);
+    if (temp.m_key == (char *)"\0")
+    {
+        k_s.m_key = (char *)"\0";
+        return k_s;
+    }
+    else return temp;
 
     return k_s;
 }

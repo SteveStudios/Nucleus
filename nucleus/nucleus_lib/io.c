@@ -44,3 +44,9 @@ void println(const char* str) {
 void print(const char* str) { 
     flanterm_write(get_ft_ctx(), str, strlen(str));
 }
+
+// Prints a kernel panic warning
+void kernel_panic()
+{
+    println("!!KERNEL PANIC!!");
+}

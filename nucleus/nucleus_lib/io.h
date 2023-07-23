@@ -3,6 +3,10 @@
 
 #pragma once
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include <stdbool.h>
 
 #include "../../lib/limine/limine.h"
@@ -18,3 +22,9 @@ void println(const char* str);
 void print(const char* str);
 
 void clear_term();
+
+void kernel_panic();
+
+#ifdef __cplusplus
+}
+#endif

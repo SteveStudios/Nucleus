@@ -5,37 +5,61 @@
 #include <stddef.h>
 #include <stdbool.h>
 
-#include "stdlib/io.h"
-#include "stdlib/utils.h"
+#include "nucleus_lib/io.h"
 
 #include "drivers/keyboardps2.h"
 
-// First actions the kernel takes after starting up
-void kernel_awake(void) {
-    const char* logo = "  _   _            _\n| \\ | |_   _  ___| | ___ _   _ ___\n|  \\| | | | |/ __| |/ _ \\ | | / __|\n| |\\  | |_| | (__| |  __/ |_| \\__ \\\n|_| \\_|\\__,_|\\___|_|\\___|\\__,_|___/";
+#include "handlers/handler_keyboardps2.h"
+
+#include "opt/defines.h"
+
+#include "cpu/interrupts/idt.h"
+#include "cpu/gdt/gdt.h"
+
+void print_logo()
+{
+    const char *logo = " _   _            _\n| \\ | |_   _  ___| | ___ _   _ ___\n|  \\| | | | |/ __| |/ _ \\ | | / __|\n| |\\  | |_| | (__| |  __/ |_| \\__ \\\n|_| \\_|\\__,_|\\___|_|\\___|\\__,_|___/";
+    println("________________________________________________________");
     println(logo);
+    println("________________________________________________________");
+}
+
+// First actions the kernel takes after starting up
+void kernel_awake(void)
+{
+    gdt_init();
+    idt_init();
+
+    print_logo();
 }
 
 // Clear interrupts and halt
-void kernel_hang(void) {
-    asm ("cli");
-    do {
-        asm ("hlt");
-    } while (true);
+void kernel_hang(void)
+{
+    for (;;)
+        asm ("cli; hlt");
 }
 
-// Kernel update loop
-void kernel_update(void) {
-    while (__active)
+#ifdef POLLING
+// Kernel update loop (Is only called if POLLING is set to true)
+void kernel_update(void)
+{
+    while (true)
     {
-        char* allowed_chars = "abcdefghijklmnopqrstuvwxyz1234567890|~#$%()*+-:;<=>@[]^_.,'!?";
+        handle_keyboard();
     }
 }
+#endif
 
 // Entry point
-void kernel_enter(void) {
+void kernel_enter(void)
+{   
     kernel_awake();
+    
+    #ifdef POLLING
     kernel_update();
-    if (framebuffer_request.response == NULL || framebuffer_request.response->framebuffer_count < 1) 
-        kernel_hang();
+    #else
+    for (;;)
+        asm ("hlt");
+    #endif
 }
