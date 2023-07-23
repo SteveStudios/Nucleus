@@ -22,6 +22,8 @@
         "apic.h": "c",
         "ports.h": "c",
         "idt_handlers.h": "c",
-        "idt_setup.h": "c"
+        "idt_setup.h": "c",
+        "handler_keyboardps2.h": "c",
+        "interrupt.h": "c"
     },
 }

@@ -19,6 +19,7 @@ global irq14
 global irq15
 
 [extern handle_interrupt]
+[extern reload_segment_registers]
 
 irq0:
 	push ax

@@ -63,8 +63,6 @@ char *e_code_to_str(uint8_t e_code)
 		return (char *)"General Protection Fault";
 	case 14:
 		return (char *)"Page Fault";
-	case 15:
-		return (char *)"Reserved";
 	case 16:
 		return (char *)"Floating Point Error";
 	case 17:
@@ -72,19 +70,7 @@ char *e_code_to_str(uint8_t e_code)
 	case 18:
 		return (char *)"Machine Check Error";
 	case 19:
-
-	case 20:
-	case 21:
-	case 22:
-	case 23:
-	case 24:
-	case 25:
-	case 26:
-	case 27:
-	case 28:
-	case 29:
-	case 30:
-	case 31:
+	default:
 		return (char *)"Reserved";
 	}
 	return (char *)"\0";
@@ -92,7 +78,7 @@ char *e_code_to_str(uint8_t e_code)
 
 // Exception handler (Called from cpu/interrupts/asm/idt_exception.s)
 // "e_code" describes the ISR handler where said exception occured.
-void on_exception(int e_code)
+void on_exception(uint8_t e_code)
 {
 	kernel_panic();
 
@@ -109,7 +95,7 @@ void idt_set_descriptor(uint8_t vector, void *isr)
 	descriptor->isr_low = (uint64_t)isr & 0xFFFF;
 	descriptor->kernel_cs = 0x28;
 	descriptor->ist = 0;
-	descriptor->attributes = 0xE0;
+	descriptor->attributes = 0x8E;
 	descriptor->isr_mid = ((uint64_t)isr >> 16) & 0xFFFF;
 	descriptor->isr_high = ((uint64_t)isr >> 32) & 0xFFFFFFFF;
 	descriptor->reserved = 0;
@@ -253,6 +239,5 @@ void idt_init()
 				 :
 				 : "m"(idtr));
 
-	// Enable interrupts
-	asm volatile("sti");
+	enable_apic();
 }

@@ -40,26 +40,13 @@ void kernel_hang(void)
         asm ("cli; hlt");
 }
 
-#ifdef POLLING
-// Kernel update loop (Is only called if POLLING is set to true)
-void kernel_update(void)
-{
-    while (true)
-    {
-        handle_keyboard();
-    }
-}
-#endif
-
 // Entry point
 void kernel_enter(void)
 {   
     kernel_awake();
-    
-    #ifdef POLLING
-    kernel_update();
-    #else
+
+    // Enable interrupts
+	asm volatile("sti");
     for (;;)
         asm ("hlt");
-    #endif
 }

@@ -4,10 +4,9 @@
 #include "interrupt.h"
 
 // Called from (cpu/interrupts/asm/irq_helper.asm)
-void handle_interrupt(int irq_n)
+void handle_interrupt(uint8_t irq_n)
 {   
-    inb(0x60);
-    println("hello");
+    handle_keyboard();
 
     if (irq_n >= 8)
         outb(0xA0, 0x20);
