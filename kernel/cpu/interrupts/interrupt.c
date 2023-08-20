@@ -5,7 +5,8 @@
 
 // Called from (cpu/interrupts/asm/irq_helper.asm)
 void handle_interrupt(uint8_t irq_n)
-{   
+{   if (inb(0x60) == 0xE0)
+        last_key = 0xE0;
     handle_keyboard();
 
     if (irq_n >= 8)

@@ -10,8 +10,8 @@ extern "C" {
 #include <stdint.h>
 #include <stdbool.h>
 
-#include "../nucleus_lib/ports.h"
-#include "../nucleus_lib/io.h"
+#include "../kernel_lib/ports.h"
+#include "../kernel_lib/io.h"
 
 struct key_t
 {
@@ -21,6 +21,9 @@ struct key_t
     bool key_pressed;
     bool released;
 };
+
+// Last recorded scancode
+extern uint8_t last_key;
 
 struct key_t get_key();
 struct key_t key_from_uint8_t(uint8_t k, bool update_last_key);

@@ -9,8 +9,8 @@ extern "C" {
 
 #include <stdint.h>
 
-#include "../../nucleus_lib/io.h"
-#include "../../nucleus_lib/ports.h"
+#include "../../kernel_lib/io.h"
+#include "../../kernel_lib/ports.h"
 #include "../gdt/gdt.h"
 
 #include "apic.h"

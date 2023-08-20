@@ -3,7 +3,6 @@
 
 #include "keyboardps2.h"
 
-// Last recorded scancode
 uint8_t last_key = 0;
 
 // Translate key from "uint8_t" to "char"

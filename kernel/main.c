@@ -1,24 +1,22 @@
-// kernel.c - The main kernel manager
+// main.c - The main kernel manager
 // Created 2023/7/10 by Stephen Byrne
 
 #include <stdint.h>
 #include <stddef.h>
 #include <stdbool.h>
 
-#include "nucleus_lib/io.h"
+#include "kernel_lib/io.h"
 
 #include "drivers/keyboardps2.h"
 
 #include "handlers/handler_keyboardps2.h"
-
-#include "opt/defines.h"
 
 #include "cpu/interrupts/idt.h"
 #include "cpu/gdt/gdt.h"
 
 void print_logo()
 {
-    const char *logo = " _   _            _\n| \\ | |_   _  ___| | ___ _   _ ___\n|  \\| | | | |/ __| |/ _ \\ | | / __|\n| |\\  | |_| | (__| |  __/ |_| \\__ \\\n|_| \\_|\\__,_|\\___|_|\\___|\\__,_|___/";
+    const char *logo = "     _   _                   ___  ____\n    / \\ | |_ ___  _ __ ___  / _ \\/ ___|\n   / _ \\| __/ _ \\| '_ ` _ \\| | | \\___ \\\n  / ___ \\ || (_) | | | | | | |_| |___) |\n /_/   \\_\\__\\___/|_| |_| |_|\\___/|____/";
     println("________________________________________________________");
     println(logo);
     println("________________________________________________________");
@@ -47,6 +45,8 @@ void kernel_enter(void)
 
     // Enable interrupts
 	asm volatile("sti");
+
+    // Make sure the system doesn't exit for no reason
     for (;;)
         asm ("hlt");
 }

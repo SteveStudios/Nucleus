@@ -8,6 +8,7 @@ extern "C" {
 #endif
 
 #include "../../handlers/handler_keyboardps2.h"
+#include "../../drivers/keyboardps2.h"
 
 #ifdef __cplusplus
 }
