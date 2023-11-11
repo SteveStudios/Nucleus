@@ -4,13 +4,14 @@
 #pragma once
 
 #ifdef __cplusplus
-extern "C" {
+extern "C"
+{
 #endif
 
 #include <stdint.h>
 #include <stdbool.h>
 
-void enable_apic();
+    void enable_apic();
 
 #ifdef __cplusplus
 }

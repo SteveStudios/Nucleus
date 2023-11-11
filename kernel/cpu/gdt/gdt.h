@@ -4,19 +4,20 @@
 #pragma once
 
 #ifdef __cplusplus
-extern "C" {
+extern "C"
+{
 #endif
 
 #include <stdint.h>
 
-typedef struct
-{
-	uint16_t limit;
-	uint64_t base;
-} __attribute__((__packed__)) gdtr_t;
+	typedef struct
+	{
+		uint16_t limit;
+		uint64_t base;
+	} __attribute__((__packed__)) gdtr_t;
 
-extern void reload_segment_registers();
-void gdt_init();
+	extern void reload_segment_registers();
+	void gdt_init();
 
 #ifdef __cplusplus
 }

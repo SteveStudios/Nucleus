@@ -4,7 +4,8 @@
 #pragma once
 
 #ifdef __cplusplus
-extern "C" {
+extern "C"
+{
 #endif
 
 #include <stdint.h>
@@ -13,20 +14,20 @@ extern "C" {
 #include "../kernel_lib/ports.h"
 #include "../kernel_lib/io.h"
 
-struct key_t
-{
-    char* m_key;
-    uint8_t i_key;
-    uint8_t last_key;
-    bool key_pressed;
-    bool released;
-};
+    struct key_t
+    {
+        char *m_key;
+        uint8_t i_key;
+        uint8_t last_key;
+        bool key_pressed;
+        bool released;
+    };
 
-// Last recorded scancode
-extern uint8_t last_key;
+    // Last recorded scancode
+    extern uint8_t last_key;
 
-struct key_t get_key();
-struct key_t key_from_uint8_t(uint8_t k, bool update_last_key);
+    struct key_t get_key();
+    struct key_t key_from_uint8_t(uint8_t k, bool update_last_key);
 
 #ifdef __cplusplus
 }

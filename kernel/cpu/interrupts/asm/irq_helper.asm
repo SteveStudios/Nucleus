@@ -22,353 +22,353 @@ global irq15
 [extern reload_segment_registers]
 
 irq0:
-	push ax
-    push cx
-    push dx
-    push bx
-    push bp
-    push si
-    push di
+	push rax
+    push rcx
+    push rdx
+    push rbx
+    push rbp
+    push rsi
+    push rdi
 
-	mov rsi, 0
+	mov rdi, 0
 	call handle_interrupt
 
-    pop ax
-    pop cx
-    pop dx
-    pop bx
-    pop bp
-    pop si
-    pop di
+    pop rdi
+    pop rsi
+    pop rbp
+    pop rbx
+    pop rdx
+    pop rcx
+    pop rax
 
-	iretq
+    iretq
 
 irq1:
-	push ax
-    push cx
-    push dx
-    push bx
-    push bp
-    push si
-    push di
+	push rax
+    push rcx
+    push rdx
+    push rbx
+    push rbp
+    push rsi
+    push rdi
 
-	mov rsi, 1
+	mov rdi, 1
 	call handle_interrupt
 
-    pop ax
-    pop cx
-    pop dx
-    pop bx
-    pop bp
-    pop si
-    pop di
+    pop rdi
+    pop rsi
+    pop rbp
+    pop rbx
+    pop rdx
+    pop rcx
+    pop rax
 
-	iretq
+    iretq
 
 irq2:
-	push ax
-    push cx
-    push dx
-    push bx
-    push bp
-    push si
-    push di
+	push rax
+    push rcx
+    push rdx
+    push rbx
+    push rbp
+    push rsi
+    push rdi
 
-	mov rsi, 2
+	mov rdi, 2
 	call handle_interrupt
 
-    pop ax
-    pop cx
-    pop dx
-    pop bx
-    pop bp
-    pop si
-    pop di
+    pop rdi
+    pop rsi
+    pop rbp
+    pop rbx
+    pop rdx
+    pop rcx
+    pop rax
 
-	iretq
+    iretq
 
 irq3:
-	push ax
-    push cx
-    push dx
-    push bx
-    push bp
-    push si
-    push di
+	push rax
+    push rcx
+    push rdx
+    push rbx
+    push rbp
+    push rsi
+    push rdi
 
-	mov rsi, 3
+	mov rdi, 3
 	call handle_interrupt
 
-    pop ax
-    pop cx
-    pop dx
-    pop bx
-    pop bp
-    pop si
-    pop di
+    pop rdi
+    pop rsi
+    pop rbp
+    pop rbx
+    pop rdx
+    pop rcx
+    pop rax
 
-	iretq
+    iretq
 
 irq4:
-	push ax
-    push cx
-    push dx
-    push bx
-    push bp
-    push si
-    push di
+	push rax
+    push rcx
+    push rdx
+    push rbx
+    push rbp
+    push rsi
+    push rdi
 
-	mov rsi, 4
+	mov rdi, 4
 	call handle_interrupt
 
-    pop ax
-    pop cx
-    pop dx
-    pop bx
-    pop bp
-    pop si
-    pop di
+    pop rdi
+    pop rsi
+    pop rbp
+    pop rbx
+    pop rdx
+    pop rcx
+    pop rax
 
-	iretq
+    iretq
 
 irq5:
-	push ax
-    push cx
-    push dx
-    push bx
-    push bp
-    push si
-    push di
+	push rax
+    push rcx
+    push rdx
+    push rbx
+    push rbp
+    push rsi
+    push rdi
 
-	mov rsi, 5
+	mov rdi, 5
 	call handle_interrupt
 
-    pop ax
-    pop cx
-    pop dx
-    pop bx
-    pop bp
-    pop si
-    pop di
+    pop rdi
+    pop rsi
+    pop rbp
+    pop rbx
+    pop rdx
+    pop rcx
+    pop rax
 
-	iretq
+    iretq
 
 irq6:
-	push ax
-    push cx
-    push dx
-    push bx
-    push bp
-    push si
-    push di
+	push rax
+    push rcx
+    push rdx
+    push rbx
+    push rbp
+    push rsi
+    push rdi
 
-	mov rsi, 6
+	mov rdi, 6
 	call handle_interrupt
 
-    pop ax
-    pop cx
-    pop dx
-    pop bx
-    pop bp
-    pop si
-    pop di
+    pop rdi
+    pop rsi
+    pop rbp
+    pop rbx
+    pop rdx
+    pop rcx
+    pop rax
 
-	iretq
+    iretq
 
 irq7:
-	push ax
-    push cx
-    push dx
-    push bx
-    push bp
-    push si
-    push di
+	push rax
+    push rcx
+    push rdx
+    push rbx
+    push rbp
+    push rsi
+    push rdi
 
-	mov rsi, 7
+	mov rdi, 7
 	call handle_interrupt
 
-    pop ax
-    pop cx
-    pop dx
-    pop bx
-    pop bp
-    pop si
-    pop di
+    pop rdi
+    pop rsi
+    pop rbp
+    pop rbx
+    pop rdx
+    pop rcx
+    pop rax
 
-	iretq
+    iretq
 
 irq8:
-	push ax
-    push cx
-    push dx
-    push bx
-    push bp
-    push si
-    push di
+	push rax
+    push rcx
+    push rdx
+    push rbx
+    push rbp
+    push rsi
+    push rdi
 
-	mov rsi, 8
+	mov rdi, 8
 	call handle_interrupt
 
-    pop ax
-    pop cx
-    pop dx
-    pop bx
-    pop bp
-    pop si
-    pop di
+    pop rdi
+    pop rsi
+    pop rbp
+    pop rbx
+    pop rdx
+    pop rcx
+    pop rax
 
-	iretq
+    iretq
 
 irq9:
-	push ax
-    push cx
-    push dx
-    push bx
-    push bp
-    push si
-    push di
+	push rax
+    push rcx
+    push rdx
+    push rbx
+    push rbp
+    push rsi
+    push rdi
 
-	mov rsi, 9
+	mov rdi, 9
 	call handle_interrupt
 
-    pop ax
-    pop cx
-    pop dx
-    pop bx
-    pop bp
-    pop si
-    pop di
+    pop rdi
+    pop rsi
+    pop rbp
+    pop rbx
+    pop rdx
+    pop rcx
+    pop rax
 
-	iretq
+    iretq
 
 irq10:
-	push ax
-    push cx
-    push dx
-    push bx
-    push bp
-    push si
-    push di
+	push rax
+    push rcx
+    push rdx
+    push rbx
+    push rbp
+    push rsi
+    push rdi
 
-	mov rsi, 10
+	mov rdi, 10
 	call handle_interrupt
 
-    pop ax
-    pop cx
-    pop dx
-    pop bx
-    pop bp
-    pop si
-    pop di
+    pop rdi
+    pop rsi
+    pop rbp
+    pop rbx
+    pop rdx
+    pop rcx
+    pop rax
 
-	iretq
+    iretq
 
 irq11:
-	push ax
-    push cx
-    push dx
-    push bx
-    push bp
-    push si
-    push di
+	push rax
+    push rcx
+    push rdx
+    push rbx
+    push rbp
+    push rsi
+    push rdi
 
-	mov rsi, 11
+	mov rdi, 11
 	call handle_interrupt
 
-    pop ax
-    pop cx
-    pop dx
-    pop bx
-    pop bp
-    pop si
-    pop di
+    pop rdi
+    pop rsi
+    pop rbp
+    pop rbx
+    pop rdx
+    pop rcx
+    pop rax
 
-	iretq
+    iretq
 
 irq12:
-	push ax
-    push cx
-    push dx
-    push bx
-    push bp
-    push si
-    push di
+	push rax
+    push rcx
+    push rdx
+    push rbx
+    push rbp
+    push rsi
+    push rdi
 
-	mov rsi, 12
+	mov rdi, 12
 	call handle_interrupt
 
-    pop ax
-    pop cx
-    pop dx
-    pop bx
-    pop bp
-    pop si
-    pop di
+    pop rdi
+    pop rsi
+    pop rbp
+    pop rbx
+    pop rdx
+    pop rcx
+    pop rax
 
-	iretq
+    iretq
 
 irq13:
-	push ax
-    push cx
-    push dx
-    push bx
-    push bp
-    push si
-    push di
+	push rax
+    push rcx
+    push rdx
+    push rbx
+    push rbp
+    push rsi
+    push rdi
 
-	mov rsi, 13
+	mov rdi, 13
 	call handle_interrupt
 
-    pop ax
-    pop cx
-    pop dx
-    pop bx
-    pop bp
-    pop si
-    pop di
+    pop rdi
+    pop rsi
+    pop rbp
+    pop rbx
+    pop rdx
+    pop rcx
+    pop rax
 
-	iretq
+    iretq
 
 irq14:
-	push ax
-    push cx
-    push dx
-    push bx
-    push bp
-    push si
-    push di
+	push rax
+    push rcx
+    push rdx
+    push rbx
+    push rbp
+    push rsi
+    push rdi
 
-	mov rsi, 14
+	mov rdi, 14
 	call handle_interrupt
 
-    pop ax
-    pop cx
-    pop dx
-    pop bx
-    pop bp
-    pop si
-    pop di
+    pop rdi
+    pop rsi
+    pop rbp
+    pop rbx
+    pop rdx
+    pop rcx
+    pop rax
 
-	iretq
+    iretq
 
 irq15:
-	push ax
-    push cx
-    push dx
-    push bx
-    push bp
-    push si
-    push di
+	push rax
+    push rcx
+    push rdx
+    push rbx
+    push rbp
+    push rsi
+    push rdi
 
-	mov rsi, 15
+	mov rdi, 15
 	call handle_interrupt
 
-    pop ax
-    pop cx
-    pop dx
-    pop bx
-    pop bp
-    pop si
-    pop di
+    pop rdi
+    pop rsi
+    pop rbp
+    pop rbx
+    pop rdx
+    pop rcx
+    pop rax
 
-	iretq
+    iretq

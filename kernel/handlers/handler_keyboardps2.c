@@ -12,7 +12,7 @@ void handle_keyboard(void)
     {
         for (int i = 0; i < strlen(allowed_chars); i++)
         {
-            // Check if he pressed key is equal to an allowed character
+            // Check if the pressed key is equal to an allowed character
             if (*get_key().m_key == allowed_chars[i])
             {
                 is_char_allowed = true;

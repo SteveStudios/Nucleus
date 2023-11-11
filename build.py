@@ -1,10 +1,9 @@
-# x.py - AtomOS Build Script
+# build.py - Atom OS Build Script
 # Created 2023/7/10 by Stephen Byrne
 
 import os
 import platform
 from shutil import rmtree
-from time import sleep
 import subprocess
 import glob
 
@@ -12,11 +11,6 @@ supportedExtensions = [".c", ".asm", ".s"]
 linkerScriptName = "link.ld"
 
 filesToCompile = []
-print("----------------------------------------------")
-print("            The AtomOS Builder               ")
-print("----------------------------------------------")
-
-sleep(1.5)
 
 if (os.path.exists("bin/iso")):
     rmtree("bin/iso")
@@ -26,8 +20,6 @@ if (not os.path.exists("bin/obj")):
     os.mkdir("bin/obj")
 if (not os.path.exists("bin/iso")):
     os.mkdir("bin/iso")
-if (not os.path.exists("bin/iso/boot")):
-    os.mkdir("bin/iso/boot")
 if (not os.path.exists("bin/iso/EFI")):
     os.mkdir("bin/iso/EFI")
 if (not os.path.exists("bin/iso/EFI/BOOT")):
@@ -39,7 +31,7 @@ for ext in supportedExtensions:
         if os.path.isdir(file) or file.endswith("/limine.c"): continue
         match ext:
             case ".c":
-                subprocess.run(["x86_64-elf-gcc", "-Wall", "-Wextra", "-std=gnu11", "-ffreestanding", "-fno-stack-protector",
+                subprocess.run(["x86_64-elf-gcc", "-std=gnu11", "-ffreestanding", "-fno-stack-protector",
                                 "-fno-stack-check",
                                 "-fno-lto",
                                 "-fPIE",
@@ -59,13 +51,13 @@ argArr = ["x86_64-elf-ld", "-o", "bin/iso/AtomOS.elf"]
 
 for file in filesToCompile:
     argArr.append("bin/obj/" + file)
-for endingArg in ["-m", "elf_x86_64", "-nostdlib", "-static", "-pie", "--no-dynamic-linker", "-ztext", "-zmax-page-size=0x1000", "-T", linkerScriptName]:
+for endingArg in ["-m", "elf_x86_64", "-nostdlib", "-static", "-pie", "--no-dynamic-linker", "-ztext", "-T", linkerScriptName]:
     argArr.append(endingArg)
 
 subprocess.run(argArr)
 
 if (os.path.exists("bin/iso")):
-    cfgContents = open("temp/limine.cfg")
+    cfgContents = open("rootfs/limine.cfg")
     copiedFile = open("bin/iso/limine.cfg", "x")
     copiedFile.write(cfgContents.read())
 
@@ -94,12 +86,14 @@ if (os.path.exists("bin/iso")):
     elif platform.system() == "Linux":
         subprocess.run(["./lib/limine/limine", "bios-install", "bin/iso/AtomOS.iso"])
 
-useQemu = input("Would you like to run QEMU? (y/n): ")
-if (useQemu.replace(" ", "") != "y" and useQemu.replace(" ", "") != "n"):
+useQemu = input("Would you like to run QEMU? (Y/n): ")
+if (useQemu.replace(" ", "") != "y" and useQemu.replace(" ", "") != "n" and useQemu.replace(" ", "") != ""):
     print("Error: Unknown response")
 
 match useQemu.replace(" ", ""):
     case "y":
+        subprocess.run(["qemu-system-x86_64", "-boot", "d", "-cdrom", 'bin/iso/AtomOS.iso', "-d", "int", "-m", "2048", "-M", "smm=off"])
+    case "":
         subprocess.run(["qemu-system-x86_64", "-boot", "d", "-cdrom", 'bin/iso/AtomOS.iso', "-d", "int", "-m", "2048", "-M", "smm=off"])
     case "n":
         exit(0)

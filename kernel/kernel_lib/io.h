@@ -4,7 +4,8 @@
 #pragma once
 
 #ifdef __cplusplus
-extern "C" {
+extern "C"
+{
 #endif
 
 #include <stdbool.h>
@@ -16,14 +17,14 @@ extern "C" {
 
 #include "str.h"
 
-static volatile struct limine_framebuffer_request framebuffer_request;
+    static volatile struct limine_framebuffer_request framebuffer_request;
 
-void println(const char* str);
-void print(const char* str);
+    void println(const char *str);
+    void print(const char *str);
 
-void clear_term();
+    void clear_term();
 
-void kernel_panic();
+    void kernel_panic();
 
 #ifdef __cplusplus
 }

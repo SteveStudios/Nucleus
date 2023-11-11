@@ -4,13 +4,14 @@
 #pragma once
 
 #ifdef __cplusplus
-extern "C" {
+extern "C"
+{
 #endif
 
-unsigned char inb(unsigned short port);
-void outb(unsigned short port, unsigned char value);
+    unsigned char inb(unsigned short port);
+    void outb(unsigned short port, unsigned char value);
 
-void io_wait();
+    void io_wait();
 
 #ifdef __cplusplus
 }

@@ -25,6 +25,8 @@
         "idt_setup.h": "c",
         "handler_keyboardps2.h": "c",
         "interrupt.h": "c",
-        "stdbool.h": "c"
+        "stdbool.h": "c",
+        "stdint.h": "c",
+        "cstring": "c"
     },
 }

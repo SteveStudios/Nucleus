@@ -4,7 +4,8 @@
 #pragma once
 
 #ifdef __cplusplus
-extern "C" {
+extern "C"
+{
 #endif
 
 #include "../../handlers/handler_keyboardps2.h"

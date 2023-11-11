@@ -12,7 +12,8 @@ struct key_t key_from_uint8_t(uint8_t k, bool update_last_key)
     struct key_t k_s;
 
     k_s.i_key = k;
-    if (update_last_key) k_s.last_key = last_key;
+    if (update_last_key)
+        k_s.last_key = last_key;
 
     switch (k)
     {
@@ -69,7 +70,7 @@ struct key_t key_from_uint8_t(uint8_t k, bool update_last_key)
             k_s.released = true;
         break;
 
-    case 0x1C: 
+    case 0x1C:
     case 0x9C:
         if (last_key == 0xE0)
             kc = (char *)"enter";
@@ -105,7 +106,7 @@ struct key_t key_from_uint8_t(uint8_t k, bool update_last_key)
             k_s.released = true;
         break;
 
-    case 0x28: 
+    case 0x28:
     case 0xA8:
         kc = (char *)"\\";
         if (k == 0x28)
@@ -156,7 +157,7 @@ struct key_t key_from_uint8_t(uint8_t k, bool update_last_key)
             k_s.released = true;
         break;
 
-    case 0x3C: 
+    case 0x3C:
     case 0xBC:
         kc = (char *)"f2";
         if (k == 0x3C)
@@ -174,7 +175,7 @@ struct key_t key_from_uint8_t(uint8_t k, bool update_last_key)
             k_s.released = true;
         break;
 
-    case 0x44: 
+    case 0x44:
     case 0xC4:
         kc = (char *)"f10";
         if (k == 0x44)
@@ -471,7 +472,8 @@ struct key_t key_from_uint8_t(uint8_t k, bool update_last_key)
     case 0xB1:
         if (last_key == 0xE0)
             kc = (char *)"n";
-        else kc = (char *)"f7";
+        else
+            kc = (char *)"f7";
         if (k == 0x31)
             k_s.released = false;
         else
@@ -969,7 +971,8 @@ struct key_t key_from_uint8_t(uint8_t k, bool update_last_key)
         break;
     }
 
-    if (update_last_key) last_key = k;
+    if (update_last_key)
+        last_key = k;
     k_s.m_key = kc;
 
     return k_s;
@@ -996,7 +999,8 @@ struct key_t get_key()
         k_s.m_key = (char *)"\0";
         return k_s;
     }
-    else return temp;
+    else
+        return temp;
 
     return k_s;
 }

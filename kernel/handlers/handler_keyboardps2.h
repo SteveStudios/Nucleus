@@ -4,13 +4,14 @@
 #pragma once
 
 #ifdef __cplusplus
-extern "C" {
+extern "C"
+{
 #endif
 
 #include "../drivers/keyboardps2.h"
 
-void handle_keyboard(void);
+    void handle_keyboard(void);
 
 #ifdef __cplusplus
-extern "C" }
+}
 #endif

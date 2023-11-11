@@ -73,7 +73,7 @@ char *e_code_to_str(uint8_t e_code)
 	default:
 		return (char *)"Reserved";
 	}
-	return (char *)"\0";
+	return (char *)"Unknown Error";
 }
 
 // Exception handler (Called from cpu/interrupts/asm/idt_exception.s)
@@ -82,7 +82,7 @@ void on_exception(uint8_t e_code)
 {
 	kernel_panic();
 
-	print("EXCEPTION: ");
+	print("[IDT] ");
 	print(e_code_to_str(e_code));
 
 	kernel_hang();
@@ -128,12 +128,12 @@ void nm_interrupt_disable()
 #define ICW1_ICW4 0x01
 #define ICW1_SINGLE 0x02
 #define ICW1_INTERVAL4 0x04
-#define ICW1_LEVEL 0x08	
+#define ICW1_LEVEL 0x08
 #define ICW1_INIT 0x10
 
-#define ICW4_8086 0x01	
-#define ICW4_AUTO 0x02*/
-#define ICW4_BUF_SLAVE 0x08 
+#define ICW4_8086 0x01
+#define ICW4_AUTO 0x02 * /
+#define ICW4_BUF_SLAVE 0x08
 #define ICW4_BUF_MASTER 0x08
 #define ICW4_SFNM 0x10
 
@@ -148,13 +148,13 @@ void remap_pic(int offset1, int offset2)
 	io_wait();
 	outb(PIC2_COMMAND, ICW1_INIT | ICW1_ICW4);
 	io_wait();
-	outb(PIC1_DATA, offset1); 
+	outb(PIC1_DATA, offset1);
 	io_wait();
-	outb(PIC2_DATA, offset2); 
+	outb(PIC2_DATA, offset2);
 	io_wait();
 	outb(PIC1_DATA, 4);
 	io_wait();
-	outb(PIC2_DATA, 2); 
+	outb(PIC2_DATA, 2);
 	io_wait();
 
 	outb(PIC1_DATA, ICW4_8086);

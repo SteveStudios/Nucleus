@@ -44,24 +44,24 @@ global isr31
 isr0:
     call reload_segment_registers
 
-    push ax
-    push cx
-    push dx
-    push bx
-    push bp
-    push si
-    push di
+    push rax
+    push rcx
+    push rdx
+    push rbx
+    push rbp
+    push rsi
+    push rdi
 
-    mov rsi, 0
+    mov rdi, 0
     call on_exception
 
-    pop ax
-    pop cx
-    pop dx
-    pop bx
-    pop bp
-    pop si
-    pop di
+    pop rdi
+    pop rsi
+    pop rbp
+    pop rbx
+    pop rdx
+    pop rcx
+    pop rax
 
     iretq
 
@@ -69,24 +69,24 @@ isr0:
 isr1:
     call reload_segment_registers
 
-    push ax
-    push cx
-    push dx
-    push bx
-    push bp
-    push si
-    push di
+    push rax
+    push rcx
+    push rdx
+    push rbx
+    push rbp
+    push rsi
+    push rdi
 
-    mov rsi, 1
+    mov rdi, 1
     call on_exception
 
-    pop ax
-    pop cx
-    pop dx
-    pop bx
-    pop bp
-    pop si
-    pop di
+    pop rdi
+    pop rsi
+    pop rbp
+    pop rbx
+    pop rdx
+    pop rcx
+    pop rax
 
     iretq
 
@@ -94,24 +94,24 @@ isr1:
 isr2:
     call reload_segment_registers
 
-    push ax
-    push cx
-    push dx
-    push bx
-    push bp
-    push si
-    push di
+    push rax
+    push rcx
+    push rdx
+    push rbx
+    push rbp
+    push rsi
+    push rdi
 
-    mov rsi, 2
+    mov rdi, 2
     call on_exception
 
-    pop ax
-    pop cx
-    pop dx
-    pop bx
-    pop bp
-    pop si
-    pop di
+    pop rdi
+    pop rsi
+    pop rbp
+    pop rbx
+    pop rdx
+    pop rcx
+    pop rax
 
     iretq
 
@@ -119,24 +119,24 @@ isr2:
 isr3:
     call reload_segment_registers
 
-    push ax
-    push cx
-    push dx
-    push bx
-    push bp
-    push si
-    push di
+    push rax
+    push rcx
+    push rdx
+    push rbx
+    push rbp
+    push rsi
+    push rdi
 
-    mov rsi, 3
+    mov rdi, 3
     call on_exception
 
-    pop ax
-    pop cx
-    pop dx
-    pop bx
-    pop bp
-    pop si
-    pop di
+    pop rdi
+    pop rsi
+    pop rbp
+    pop rbx
+    pop rdx
+    pop rcx
+    pop rax
 
     iretq
 
@@ -144,24 +144,24 @@ isr3:
 isr4:
     call reload_segment_registers
 
-    push ax
-    push cx
-    push dx
-    push bx
-    push bp
-    push si
-    push di
+    push rax
+    push rcx
+    push rdx
+    push rbx
+    push rbp
+    push rsi
+    push rdi
 
-    mov rsi, 4
+    mov rdi, 4
     call on_exception
 
-    pop ax
-    pop cx
-    pop dx
-    pop bx
-    pop bp
-    pop si
-    pop di
+    pop rdi
+    pop rsi
+    pop rbp
+    pop rbx
+    pop rdx
+    pop rcx
+    pop rax
 
     iretq
 
@@ -169,24 +169,24 @@ isr4:
 isr5:
     call reload_segment_registers
 
-    push ax
-    push cx
-    push dx
-    push bx
-    push bp
-    push si
-    push di
+    push rax
+    push rcx
+    push rdx
+    push rbx
+    push rbp
+    push rsi
+    push rdi
 
-    mov rsi, 5
+    mov rdi, 5
     call on_exception
 
-    pop ax
-    pop cx
-    pop dx
-    pop bx
-    pop bp
-    pop si
-    pop di
+    pop rdi
+    pop rsi
+    pop rbp
+    pop rbx
+    pop rdx
+    pop rcx
+    pop rax
 
     iretq
 
@@ -194,24 +194,24 @@ isr5:
 isr6:
     call reload_segment_registers
 
-    push ax
-    push cx
-    push dx
-    push bx
-    push bp
-    push si
-    push di
+    push rax
+    push rcx
+    push rdx
+    push rbx
+    push rbp
+    push rsi
+    push rdi
 
-    mov rsi, 6
+    mov rdi, 6
     call on_exception
 
-    pop ax
-    pop cx
-    pop dx
-    pop bx
-    pop bp
-    pop si
-    pop di
+    pop rdi
+    pop rsi
+    pop rbp
+    pop rbx
+    pop rdx
+    pop rcx
+    pop rax
 
     iretq
 
@@ -219,24 +219,24 @@ isr6:
 isr7:
     call reload_segment_registers
 
-    push ax
-    push cx
-    push dx
-    push bx
-    push bp
-    push si
-    push di
+    push rax
+    push rcx
+    push rdx
+    push rbx
+    push rbp
+    push rsi
+    push rdi
 
-    mov rsi, 7
+    mov rdi, 7
     call on_exception
 
-    pop ax
-    pop cx
-    pop dx
-    pop bx
-    pop bp
-    pop si
-    pop di
+    pop rdi
+    pop rsi
+    pop rbp
+    pop rbx
+    pop rdx
+    pop rcx
+    pop rax
 
     iretq
 
@@ -244,24 +244,24 @@ isr7:
 isr8:
     call reload_segment_registers
 
-    push ax
-    push cx
-    push dx
-    push bx
-    push bp
-    push si
-    push di
+    push rax
+    push rcx
+    push rdx
+    push rbx
+    push rbp
+    push rsi
+    push rdi
 
-    mov rsi, 8
+    mov rdi, 8
     call on_exception
 
-    pop ax
-    pop cx
-    pop dx
-    pop bx
-    pop bp
-    pop si
-    pop di
+    pop rdi
+    pop rsi
+    pop rbp
+    pop rbx
+    pop rdx
+    pop rcx
+    pop rax
 
     iretq
 
@@ -269,24 +269,24 @@ isr8:
 isr9:
     call reload_segment_registers
 
-    push ax
-    push cx
-    push dx
-    push bx
-    push bp
-    push si
-    push di
+    push rax
+    push rcx
+    push rdx
+    push rbx
+    push rbp
+    push rsi
+    push rdi
 
-    mov rsi, 9
+    mov rdi, 9
     call on_exception
 
-    pop ax
-    pop cx
-    pop dx
-    pop bx
-    pop bp
-    pop si
-    pop di
+    pop rdi
+    pop rsi
+    pop rbp
+    pop rbx
+    pop rdx
+    pop rcx
+    pop rax
 
     iretq
 
@@ -294,24 +294,24 @@ isr9:
 isr10:
     call reload_segment_registers
 
-    push ax
-    push cx
-    push dx
-    push bx
-    push bp
-    push si
-    push di
+    push rax
+    push rcx
+    push rdx
+    push rbx
+    push rbp
+    push rsi
+    push rdi
 
-    mov rsi, 10
+    mov rdi, 10
     call on_exception
 
-    pop ax
-    pop cx
-    pop dx
-    pop bx
-    pop bp
-    pop si
-    pop di
+    pop rdi
+    pop rsi
+    pop rbp
+    pop rbx
+    pop rdx
+    pop rcx
+    pop rax
 
     iretq
 
@@ -319,24 +319,24 @@ isr10:
 isr11:
     call reload_segment_registers
 
-    push ax
-    push cx
-    push dx
-    push bx
-    push bp
-    push si
-    push di
+    push rax
+    push rcx
+    push rdx
+    push rbx
+    push rbp
+    push rsi
+    push rdi
 
-    mov rsi, 11
+    mov rdi, 11
     call on_exception
 
-    pop ax
-    pop cx
-    pop dx
-    pop bx
-    pop bp
-    pop si
-    pop di
+    pop rdi
+    pop rsi
+    pop rbp
+    pop rbx
+    pop rdx
+    pop rcx
+    pop rax
 
     iretq
 
@@ -344,24 +344,24 @@ isr11:
 isr12:
     call reload_segment_registers
 
-    push ax
-    push cx
-    push dx
-    push bx
-    push bp
-    push si
-    push di
+    push rax
+    push rcx
+    push rdx
+    push rbx
+    push rbp
+    push rsi
+    push rdi
 
-    mov rsi, 12
+    mov rdi, 12
     call on_exception
 
-    pop ax
-    pop cx
-    pop dx
-    pop bx
-    pop bp
-    pop si
-    pop di
+    pop rdi
+    pop rsi
+    pop rbp
+    pop rbx
+    pop rdx
+    pop rcx
+    pop rax
 
     iretq
 
@@ -369,24 +369,24 @@ isr12:
 isr13:
     call reload_segment_registers
 
-    push ax
-    push cx
-    push dx
-    push bx
-    push bp
-    push si
-    push di
+    push rax
+    push rcx
+    push rdx
+    push rbx
+    push rbp
+    push rsi
+    push rdi
 
-    mov rsi, 13
+    mov rdi, 13
     call on_exception
 
-    pop ax
-    pop cx
-    pop dx
-    pop bx
-    pop bp
-    pop si
-    pop di
+    pop rdi
+    pop rsi
+    pop rbp
+    pop rbx
+    pop rdx
+    pop rcx
+    pop rax
 
     iretq
 
@@ -394,24 +394,24 @@ isr13:
 isr14:
     call reload_segment_registers
 
-    push ax
-    push cx
-    push dx
-    push bx
-    push bp
-    push si
-    push di
+    push rax
+    push rcx
+    push rdx
+    push rbx
+    push rbp
+    push rsi
+    push rdi
 
-    mov rsi, 14
+    mov rdi, 14
     call on_exception
 
-    pop ax
-    pop cx
-    pop dx
-    pop bx
-    pop bp
-    pop si
-    pop di
+    pop rdi
+    pop rsi
+    pop rbp
+    pop rbx
+    pop rdx
+    pop rcx
+    pop rax
 
     iretq
 
@@ -419,24 +419,24 @@ isr14:
 isr15:
     call reload_segment_registers
 
-    push ax
-    push cx
-    push dx
-    push bx
-    push bp
-    push si
-    push di
+    push rax
+    push rcx
+    push rdx
+    push rbx
+    push rbp
+    push rsi
+    push rdi
 
-    mov rsi, 15
+    mov rdi, 15
     call on_exception
 
-    pop ax
-    pop cx
-    pop dx
-    pop bx
-    pop bp
-    pop si
-    pop di
+    pop rdi
+    pop rsi
+    pop rbp
+    pop rbx
+    pop rdx
+    pop rcx
+    pop rax
 
     iretq
 
@@ -444,24 +444,24 @@ isr15:
 isr16:
     call reload_segment_registers
 
-    push ax
-    push cx
-    push dx
-    push bx
-    push bp
-    push si
-    push di
+    push rax
+    push rcx
+    push rdx
+    push rbx
+    push rbp
+    push rsi
+    push rdi
 
-    mov rsi, 16
+    mov rdi, 16
     call on_exception
 
-    pop ax
-    pop cx
-    pop dx
-    pop bx
-    pop bp
-    pop si
-    pop di
+    pop rdi
+    pop rsi
+    pop rbp
+    pop rbx
+    pop rdx
+    pop rcx
+    pop rax
 
     iretq
 
@@ -469,24 +469,24 @@ isr16:
 isr17:
     call reload_segment_registers
 
-    push ax
-    push cx
-    push dx
-    push bx
-    push bp
-    push si
-    push di
+    push rax
+    push rcx
+    push rdx
+    push rbx
+    push rbp
+    push rsi
+    push rdi
 
-    mov rsi, 17
+    mov rdi, 17
     call on_exception
 
-    pop ax
-    pop cx
-    pop dx
-    pop bx
-    pop bp
-    pop si
-    pop di
+    pop rdi
+    pop rsi
+    pop rbp
+    pop rbx
+    pop rdx
+    pop rcx
+    pop rax
 
     iretq
 
@@ -494,24 +494,24 @@ isr17:
 isr18:
     call reload_segment_registers
 
-    push ax
-    push cx
-    push dx
-    push bx
-    push bp
-    push si
-    push di
+    push rax
+    push rcx
+    push rdx
+    push rbx
+    push rbp
+    push rsi
+    push rdi
 
-    mov rsi, 18
+    mov rdi, 18
     call on_exception
 
-    pop ax
-    pop cx
-    pop dx
-    pop bx
-    pop bp
-    pop si
-    pop di
+    pop rdi
+    pop rsi
+    pop rbp
+    pop rbx
+    pop rdx
+    pop rcx
+    pop rax
 
     iretq
 
@@ -520,311 +520,311 @@ isr18:
 isr19:
     call reload_segment_registers
 
-    push ax
-    push cx
-    push dx
-    push bx
-    push bp
-    push si
-    push di
+    push rax
+    push rcx
+    push rdx
+    push rbx
+    push rbp
+    push rsi
+    push rdi
 
-    mov rsi, 19
+    mov rdi, 19
     call on_exception
 
-    pop ax
-    pop cx
-    pop dx
-    pop bx
-    pop bp
-    pop si
-    pop di
+    pop rdi
+    pop rsi
+    pop rbp
+    pop rbx
+    pop rdx
+    pop rcx
+    pop rax
 
     iretq
 
 isr20:
     call reload_segment_registers
 
-    push ax
-    push cx
-    push dx
-    push bx
-    push bp
-    push si
-    push di
+    push rax
+    push rcx
+    push rdx
+    push rbx
+    push rbp
+    push rsi
+    push rdi
 
-    mov rsi, 20
+    mov rdi, 20
     call on_exception
 
-    pop ax
-    pop cx
-    pop dx
-    pop bx
-    pop bp
-    pop si
-    pop di
+    pop rdi
+    pop rsi
+    pop rbp
+    pop rbx
+    pop rdx
+    pop rcx
+    pop rax
 
     iretq
 
 isr21:
     call reload_segment_registers
 
-    push ax
-    push cx
-    push dx
-    push bx
-    push bp
-    push si
-    push di
+    push rax
+    push rcx
+    push rdx
+    push rbx
+    push rbp
+    push rsi
+    push rdi
 
-    mov rsi, 21
+    mov rdi, 21
     call on_exception
 
-    pop ax
-    pop cx
-    pop dx
-    pop bx
-    pop bp
-    pop si
-    pop di
+    pop rdi
+    pop rsi
+    pop rbp
+    pop rbx
+    pop rdx
+    pop rcx
+    pop rax
 
     iretq
     
 isr22:
     call reload_segment_registers
 
-    push ax
-    push cx
-    push dx
-    push bx
-    push bp
-    push si
-    push di
+    push rax
+    push rcx
+    push rdx
+    push rbx
+    push rbp
+    push rsi
+    push rdi
 
-    mov rsi, 22
+    mov rdi, 22
     call on_exception
 
-    pop ax
-    pop cx
-    pop dx
-    pop bx
-    pop bp
-    pop si
-    pop di
+    pop rdi
+    pop rsi
+    pop rbp
+    pop rbx
+    pop rdx
+    pop rcx
+    pop rax
 
     iretq
 
 isr23:
     call reload_segment_registers
 
-    push ax
-    push cx
-    push dx
-    push bx
-    push bp
-    push si
-    push di
+    push rax
+    push rcx
+    push rdx
+    push rbx
+    push rbp
+    push rsi
+    push rdi
 
-    mov rsi, 23
+    mov rdi, 23
     call on_exception
 
-    pop ax
-    pop cx
-    pop dx
-    pop bx
-    pop bp
-    pop si
-    pop di
+    pop rdi
+    pop rsi
+    pop rbp
+    pop rbx
+    pop rdx
+    pop rcx
+    pop rax
 
     iretq
 
 isr24:
     call reload_segment_registers
 
-    push ax
-    push cx
-    push dx
-    push bx
-    push bp
-    push si
-    push di
+    push rax
+    push rcx
+    push rdx
+    push rbx
+    push rbp
+    push rsi
+    push rdi
 
-    mov rsi, 24
+    mov rdi, 24
     call on_exception
 
-    pop ax
-    pop cx
-    pop dx
-    pop bx
-    pop bp
-    pop si
-    pop di
+    pop rdi
+    pop rsi
+    pop rbp
+    pop rbx
+    pop rdx
+    pop rcx
+    pop rax
 
     iretq
 
 isr25:
     call reload_segment_registers
 
-    push ax
-    push cx
-    push dx
-    push bx
-    push bp
-    push si
-    push di
+    push rax
+    push rcx
+    push rdx
+    push rbx
+    push rbp
+    push rsi
+    push rdi
 
-    mov rsi, 25
+    mov rdi, 25
     call on_exception
 
-    pop ax
-    pop cx
-    pop dx
-    pop bx
-    pop bp
-    pop si
-    pop di
+    pop rdi
+    pop rsi
+    pop rbp
+    pop rbx
+    pop rdx
+    pop rcx
+    pop rax
 
     iretq
 
 isr26:
     call reload_segment_registers
 
-    push ax
-    push cx
-    push dx
-    push bx
-    push bp
-    push si
-    push di
+    push rax
+    push rcx
+    push rdx
+    push rbx
+    push rbp
+    push rsi
+    push rdi
 
-    mov rsi, 26
+    mov rdi, 26
     call on_exception
 
-    pop ax
-    pop cx
-    pop dx
-    pop bx
-    pop bp
-    pop si
-    pop di
+    pop rdi
+    pop rsi
+    pop rbp
+    pop rbx
+    pop rdx
+    pop rcx
+    pop rax
 
     iretq
 
 isr27:
     call reload_segment_registers
 
-    push ax
-    push cx
-    push dx
-    push bx
-    push bp
-    push si
-    push di
+    push rax
+    push rcx
+    push rdx
+    push rbx
+    push rbp
+    push rsi
+    push rdi
 
-    mov rsi, 27
+    mov rdi, 27
     call on_exception
 
-    pop ax
-    pop cx
-    pop dx
-    pop bx
-    pop bp
-    pop si
-    pop di
+    pop rdi
+    pop rsi
+    pop rbp
+    pop rbx
+    pop rdx
+    pop rcx
+    pop rax
 
     iretq
 
 isr28:
     call reload_segment_registers
 
-    push ax
-    push cx
-    push dx
-    push bx
-    push bp
-    push si
-    push di
+    push rax
+    push rcx
+    push rdx
+    push rbx
+    push rbp
+    push rsi
+    push rdi
 
-    mov rsi, 28
+    mov rdi, 28
     call on_exception
 
-    pop ax
-    pop cx
-    pop dx
-    pop bx
-    pop bp
-    pop si
-    pop di
+    pop rdi
+    pop rsi
+    pop rbp
+    pop rbx
+    pop rdx
+    pop rcx
+    pop rax
 
     iretq
 
 isr29:
     call reload_segment_registers
 
-    push ax
-    push cx
-    push dx
-    push bx
-    push bp
-    push si
-    push di
+    push rax
+    push rcx
+    push rdx
+    push rbx
+    push rbp
+    push rsi
+    push rdi
 
-    mov rsi, 29
+    mov rdi, 29
     call on_exception
 
-    pop ax
-    pop cx
-    pop dx
-    pop bx
-    pop bp
-    pop si
-    pop di
+    pop rdi
+    pop rsi
+    pop rbp
+    pop rbx
+    pop rdx
+    pop rcx
+    pop rax
 
     iretq
 
 isr30:
     call reload_segment_registers
 
-    push ax
-    push cx
-    push dx
-    push bx
-    push bp
-    push si
-    push di
+    push rax
+    push rcx
+    push rdx
+    push rbx
+    push rbp
+    push rsi
+    push rdi
 
-    mov rsi, 30
+    mov rdi, 30
     call on_exception
 
-    pop ax
-    pop cx
-    pop dx
-    pop bx
-    pop bp
-    pop si
-    pop di
+    pop rdi
+    pop rsi
+    pop rbp
+    pop rbx
+    pop rdx
+    pop rcx
+    pop rax
 
     iretq
 
 isr31:
     call reload_segment_registers
 
-    push ax
-    push cx
-    push dx
-    push bx
-    push bp
-    push si
-    push di
+    push rax
+    push rcx
+    push rdx
+    push rbx
+    push rbp
+    push rsi
+    push rdi
 
-    mov rsi, 31
+    mov rdi, 31
     call on_exception
 
-    pop ax
-    pop cx
-    pop dx
-    pop bx
-    pop bp
-    pop si
-    pop di
+    pop rdi
+    pop rsi
+    pop rbp
+    pop rbx
+    pop rdx
+    pop rcx
+    pop rax
 
     iretq
