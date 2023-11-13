@@ -27,6 +27,14 @@
         "interrupt.h": "c",
         "stdbool.h": "c",
         "stdint.h": "c",
-        "cstring": "c"
+        "cstring": "c",
+        "liballoc.h": "c",
+        "gdt.h": "c",
+        "sata.h": "c",
+        "cstdlib": "c",
+        "new": "c",
+        "memalloc.h": "c",
+        "ext4.h": "c",
+        "memory_resource": "c"
     },
 }

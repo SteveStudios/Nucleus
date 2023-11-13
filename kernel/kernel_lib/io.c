@@ -33,14 +33,14 @@ void clear_term()
                                      framebuffer_request.response->framebuffers[0]->pitch);
 }
 
-// Write a string to video memory, printing a newline afterwards, default color is white
+// Write a string to video memory, printing a newline afterwards
 void println(const char *str)
 {
     flanterm_write(get_ft_ctx(), str, strlen(str));
     flanterm_write(get_ft_ctx(), "\n", strlen("\n"));
 }
 
-// Write a string to video memory, default color is white
+// Write a string to video memory
 void print(const char *str)
 {
     flanterm_write(get_ft_ctx(), str, strlen(str));
@@ -49,5 +49,5 @@ void print(const char *str)
 // Prints a kernel panic warning
 void kernel_panic()
 {
-    println("!!KERNEL PANIC!!");
+    println("[ERROR] Kernel Panic");
 }

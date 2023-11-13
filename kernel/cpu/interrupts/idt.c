@@ -80,8 +80,6 @@ char *e_code_to_str(uint8_t e_code)
 // "e_code" describes the ISR handler where said exception occured.
 void on_exception(uint8_t e_code)
 {
-	kernel_panic();
-
 	print("[IDT] ");
 	print(e_code_to_str(e_code));
 

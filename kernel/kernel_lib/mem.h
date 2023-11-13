@@ -8,21 +8,6 @@ extern "C"
 {
 #endif
 
-#if !defined(MAP_ANONYMOUS) && defined(MAP_ANON)
-# define MAP_ANONYMOUS MAP_ANON
-#endif
-#if !defined(MAP_FAILED)
-# define MAP_FAILED ((char*)-1)
-#endif
-
-#ifndef MAP_NORESERVE
-# ifdef MAP_AUTORESRV
-#  define MAP_NORESERVE MAP_AUTORESRV
-# else
-#  define MAP_NORESERVE 0
-# endif
-#endif
-
 #define PAGE_SIZE 4096
 #define MAX_MEM 0x200000
 
@@ -31,7 +16,7 @@ extern "C"
 #include <stdbool.h>
 #include "memalloc.h"
 #include "io.h"
-#include "../headers/macros.h"
+#include "../include/macros.h"
     
     extern bool is_locked;
 

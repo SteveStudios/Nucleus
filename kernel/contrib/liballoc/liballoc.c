@@ -297,7 +297,6 @@ void *malloc(size_t size)
 			}
 			l_initialized = 1;
 		}
-
 		index = getexp( size ) + MODE;
 		if ( index < MINEXP ) index = MINEXP;
 		
@@ -318,7 +317,6 @@ void *malloc(size_t size)
 
 				tag = tag->next;
 			}
-
 		
 			// No page found. Make one.
 			if ( tag == NULL )

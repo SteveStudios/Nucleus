@@ -12,6 +12,9 @@ linkerScriptName = "link.ld"
 
 filesToCompile = []
 
+init_gcc = True
+init_nasm = True
+
 if (os.path.exists("bin/iso")):
     rmtree("bin/iso")
 if (not os.path.exists("bin")):
@@ -31,7 +34,10 @@ for ext in supportedExtensions:
         if os.path.isdir(file) or file.endswith("/limine.c"): continue
         match ext:
             case ".c":
-                subprocess.run(["x86_64-elf-gcc", "-std=gnu11", "-ffreestanding", "-fno-stack-protector",
+                if init_gcc:
+                    print("\n---------------------------------\n[INFO] Invoking x86_64-elf-gcc...\n---------------------------------\n")
+                    init_gcc = False
+                subprocess.run(["x86_64-elf-gcc", "-w", "-std=gnu11", "-ffreestanding", "-fno-stack-protector",
                                 "-fno-stack-check",
                                 "-fno-lto",
                                 "-fPIE",
@@ -44,20 +50,24 @@ for ext in supportedExtensions:
                                 "-mno-sse2",
                                 "-mno-red-zone", "-c", file, "-o", "bin/obj/" + file.split("/")[len(file.split(".")[0].split("/")) - 1].split(".")[0] + ".o"])
             case ".asm" | ".s":
+                if init_nasm:
+                    print("\n---------------------------------\n[INFO] Invoking nasm...\n---------------------------------\n")
+                    init_nasm = False
                 subprocess.run(["nasm", "-Wall", "-felf64", "-o", "bin/obj/" + file.split("/")[len(file.split(".")[0].split("/")) - 1].split(".")[0] + ".o", file])
         filesToCompile.append(file.split("/")[len(file.split("/")) - 1].split(".")[0] + ".o")
+        print("- " + file + " -> " + "bin/obj/" + file.split("/")[len(file.split(".")[0].split("/")) - 1].split(".")[0] + ".o")
 
-argArr = ["x86_64-elf-ld", "-o", "bin/iso/AtomOS.elf"]
+argArr = ["x86_64-elf-ld", "-o", "bin/iso/Atom OS.elf"]
 
 for file in filesToCompile:
     argArr.append("bin/obj/" + file)
-for endingArg in ["-m", "elf_x86_64", "-nostdlib", "-static", "-pie", "--no-dynamic-linker", "-ztext", "-T", linkerScriptName]:
+for endingArg in ["-m", "elf_x86_64", "-nostdlib", "-static", "-pie", "--no-dynamic-linker", "-ztext", "-zmax-page-size=0x1000", "-T", linkerScriptName]:
     argArr.append(endingArg)
 
 subprocess.run(argArr)
 
 if (os.path.exists("bin/iso")):
-    cfgContents = open("rootfs/limine.cfg")
+    cfgContents = open("boot/limine.cfg")
     copiedFile = open("bin/iso/limine.cfg", "x")
     copiedFile.write(cfgContents.read())
 
@@ -77,23 +87,23 @@ if (os.path.exists("bin/iso")):
                     "--protective-msdos-label", 
                     "bin/iso", 
                     "-o", 
-                    "bin/iso/AtomOS.iso"])
+                    "bin/iso/Atom OS.iso"])
     
     if platform.system() == "Windows":
-        subprocess.run(["lib/limine/limine.exe", "bios-install", "bin/iso/AtomOS.iso"])
+        subprocess.run(["lib/limine/limine.exe", "bios-install", "bin/iso/Atom OS.iso"])
     elif platform.system() == "Darwin":
-        subprocess.run([os.getcwd() + "/lib/limine/limine", "bios-install", "bin/iso/AtomOS.iso"])
+        subprocess.run([os.getcwd() + "/lib/limine/limine", "bios-install", "bin/iso/Atom OS.iso"])
     elif platform.system() == "Linux":
-        subprocess.run(["./lib/limine/limine", "bios-install", "bin/iso/AtomOS.iso"])
+        subprocess.run(["./lib/limine/limine", "bios-install", "bin/iso/Atom OS.iso"])
 
-useQemu = input("Would you like to run QEMU? (Y/n): ")
-if (useQemu.replace(" ", "") != "y" and useQemu.replace(" ", "") != "n" and useQemu.replace(" ", "") != ""):
-    print("Error: Unknown response")
+useQemu = input("[INFO] Would you like to run QEMU? (Y/n) ")
+if (useQemu.replace(" ", "").lower() != "y" and useQemu.replace(" ", "").lower() != "n" and useQemu.replace(" ", "").lower() != "" and useQemu.replace(" ", "").lower() != "yes" and useQemu.replace(" ", "").lower() != "no" ):
+    print("[ERROR] Unknown response")
 
-match useQemu.replace(" ", ""):
-    case "y":
-        subprocess.run(["qemu-system-x86_64", "-boot", "d", "-cdrom", 'bin/iso/AtomOS.iso', "-d", "int", "-m", "2048", "-M", "smm=off"])
+match useQemu.replace(" ", "").lower():
+    case "y" | "yes":
+        subprocess.run(["qemu-system-x86_64", "-boot", "d", "-cdrom", 'bin/iso/Atom OS.iso', "-d", "int", "-m", "2048", "-M", "smm=off"])
     case "":
-        subprocess.run(["qemu-system-x86_64", "-boot", "d", "-cdrom", 'bin/iso/AtomOS.iso', "-d", "int", "-m", "2048", "-M", "smm=off"])
-    case "n":
+        subprocess.run(["qemu-system-x86_64", "-boot", "d", "-cdrom", 'bin/iso/Atom OS.iso', "-d", "int", "-m", "2048", "-M", "smm=off"])
+    case "n" | "no":
         exit(0)

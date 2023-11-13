@@ -8,6 +8,8 @@
 #include "kernel_lib/io.h"
 
 #include "drivers/keyboardps2.h"
+#include "drivers/sata.h"
+#include "drivers/pci.h"
 
 #include "handlers/handler_keyboardps2.h"
 
@@ -17,8 +19,8 @@
 #include "kernel_lib/memalloc.h"
 
 // First actions the kernel takes after starting up
-void kernel_awake(void)
-{
+void kernel_awake()
+{   
     println("[INFO] Initializing Allocator...");
     init_mem();
     println("[INFO] Initialized Allocator");
@@ -32,8 +34,8 @@ void kernel_awake(void)
     println("[INFO] Initialized IDT");
 }
 
-// Clear interrupts and halt
-void kernel_hang(void)
+// Disable interrupts and halt
+void kernel_hang()
 {
     for (;;)
         asm("cli; hlt");
@@ -50,6 +52,11 @@ void kernel_enter(void)
     asm volatile("sti");
     
     println("[INFO] Enabled Interrupts");
+
+    println("[INFO] Initializing PCI Driver...");
+    pci_init();
+    println("[INFO] Initialized PCI Driver");
+
     println("[INFO] Nucleus booted successfully");
 
     // Make sure the system doesn't exit for no reason

@@ -91,18 +91,12 @@ void *liballoc_alloc(int pages)
     void *ptr_ret = NULL;
     asm ("cli");
 
-    WAIT_UNTIL(pages > 0);
+    AWAIT(pages > 0);
     
-    if (free_pages < pages)
-	{
-		asm ("sti");
-		return NULL;
-	}
-
     ptr_ret = alloc_page(pages);
     if (ptr_ret == NULL) println("[ERROR] Out of memory");
 
-    asm ("sti");
+    asm volatile("sti");
     return ptr_ret;
 }
 

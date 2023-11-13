@@ -9,11 +9,7 @@ extern "C"
 #endif
 
 #include "mem.h"
-
-    extern int total_pages;
-    extern int free_pages;
-    extern int last_page;
-
+    
     void init_mem(void);
     void *alloc_page(int);
     void free_page(void*, int);
