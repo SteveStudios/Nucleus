@@ -17,7 +17,7 @@ Nucleus is the biggest component of a much bigger project called Atom OS, which 
 - `qemu`
 - `python3`
 
-You will also need A UNIX utility set, such as GNU coreutils (This is only required if you are using a non UNIX-like Host, e.g: If you are running OS X or GNU/Linux, you do not need to do this step).
+You will also need A UNIX utility set, such as GNU coreutils (This is only required if you are using a non UNIX-like Host, i.e; If you are running OS X or GNU/Linux, you do not need to do this step).
 
 # Obtaining Limine
 
