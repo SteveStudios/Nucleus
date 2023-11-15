@@ -8,63 +8,62 @@ extern "C"
 {
 #endif
 
-#define MAX_INT 2147483647
-
 #include <stdint.h>
 #include "sata.h"
 #include "../kernel_lib/str.h"
 
-    typedef struct
+    typedef struct __attribute__((packed))
     {
-        uint32_t total_inodes;
-        uint32_t total_blocks;
-        uint32_t reserved_blocks;
-        uint32_t unallocated_blocks;
-        uint32_t unallocated_inodes;
-        uint32_t superblock_loc;
-        uint32_t block_size;
-        uint32_t fragment_size;
-        uint32_t blocks_per_group;
-        uint32_t fragments_per_group;
-        uint32_t inodes_per_group;
-        uint32_t posix_last_mount_time;
-        uint32_t posix_last_write_time;
-        uint32_t times_mounted_before_cc;
-        uint32_t mounts_per_cc;
-        uint32_t magic_signature;
-        uint32_t fs_state;
-        uint32_t do_when_err;
-        uint32_t minor_version;
-        uint32_t last_cc;
-        uint32_t posix_forced_cc_interval;
-        uint32_t os_id;
-        uint32_t major_version;
-        uint32_t user_id_reserved;
-        uint32_t group_id_reserved;
-        uint32_t inode_byte_size;
-        uint32_t superblock_backup_block;
-        uint32_t opt_features;
-        uint32_t req_features;
-        uint32_t readonly_features;
-        uint32_t fs_uuid;
-        uint32_t volume_name;
-        uint32_t last_mounted_vol;
-        uint32_t compression_algorithm;
-        uint32_t file_preallocate_blocks;
-        uint32_t dir_preallocate_blocks;
-        uint32_t reserved_gdt;
-        uint32_t journal_uuid;
-        uint32_t journal_inode;
-        uint32_t journal_dev_num;
-        uint32_t inode_orphan_head;
-        uint32_t htree_has_seed_32;
-        uint32_t dir_hash_algorithm;
-        uint32_t journal_blocks;
-        uint32_t group_descriptor_size_64;
-        uint32_t mount_options;
-        uint32_t first_meta_block_group;
-        uint32_t fs_time_created;
-        uint32_t journal_inode_backup_32;
+        unsigned int total_inodes;
+        unsigned int total_blocks;
+        unsigned int reserved_blocks;
+        unsigned int unallocated_blocks;
+        unsigned int unallocated_inodes;
+        unsigned int superblock_loc;
+        unsigned int block_size;
+        unsigned int fragment_size;
+        unsigned int blocks_per_group;
+        unsigned int fragments_per_group;
+        unsigned int inodes_per_group;
+        unsigned int posix_last_mount_time;
+        unsigned int posix_last_write_time;
+        unsigned short times_mounted_before_cc;
+        unsigned short mounts_per_cc;
+        unsigned short magic_signature;
+        unsigned short fs_state;
+        unsigned short do_when_err;
+        unsigned short minor_version;
+        unsigned int last_cc;
+        unsigned int posix_forced_cc_interval;
+        unsigned int os_id;
+        unsigned int major_version;
+        unsigned short user_id_reserved;
+        unsigned short group_id_reserved;
+        unsigned int first_non_reserved_inode;
+        unsigned short inode_byte_size;
+        unsigned short superblock_backup_block;
+        unsigned int opt_features;
+        unsigned int req_features;
+        unsigned int readonly_features;
+        uint16_t fs_uuid;
+        uint16_t volume_name;
+        uint64_t last_mounted_vol;
+        unsigned int compression_algorithm;
+        unsigned char file_preallocate_blocks;
+        unsigned char dir_preallocate_blocks;
+        unsigned short reserved_gdt;
+        uint16_t journal_uuid;
+        unsigned int journal_inode;
+        unsigned int journal_dev_num;
+        unsigned int inode_orphan_head;
+        uint16_t htree_has_seed_32;
+        unsigned char dir_hash_algorithm;
+        unsigned char journal_blocks;
+        unsigned short group_descriptor_size_64;
+        unsigned int mount_options;
+        unsigned int first_meta_block_group;
+        unsigned int fs_time_created;
+        uint64_t journal_inode_backup_32;
     } ext4_superblock;
 
     void init_ext4_superblock();

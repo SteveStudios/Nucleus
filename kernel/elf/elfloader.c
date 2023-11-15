@@ -9,22 +9,22 @@ bool elf_check_file(Elf64_Ehdr *hdr)
         return false;
     if (hdr->e_ident[EI_MAG0] != ELFMAG0)
     {
-        println("[ERROR] ELF Header EI_MAG0 incorrect.\n");
+        println("[ELF] ELF Header EI_MAG0 incorrect.\n");
         return false;
     }
     if (hdr->e_ident[EI_MAG1] != ELFMAG1)
     {
-        println("[ERROR] ELF Header EI_MAG1 incorrect.\n");
+        println("[ELF] ELF Header EI_MAG1 incorrect.\n");
         return false;
     }
     if (hdr->e_ident[EI_MAG2] != ELFMAG2)
     {
-        println("[ERROR] ELF Header EI_MAG2 incorrect.\n");
+        println("[ELF] ELF Header EI_MAG2 incorrect.\n");
         return false;
     }
     if (hdr->e_ident[EI_MAG3] != ELFMAG3)
     {
-        println("[ERROR] ELF Header EI_MAG3 incorrect.\n");
+        println("[ELF] ELF Header EI_MAG3 incorrect.\n");
         return false;
     }
     return true;
@@ -34,32 +34,32 @@ bool elf_check_supported(Elf64_Ehdr *hdr)
 {
     if (!elf_check_file(hdr))
     {
-        println("[ERROR] Invalid ELF File.\n");
+        println("[ELF] Invalid ELF File.\n");
         return false;
     }
     if (hdr->e_ident[EI_CLASS] != ELFCLASS64)
     {
-        println("[ERROR] Unsupported ELF File Class.\n");
+        println("[ELF] Unsupported ELF File Class.\n");
         return false;
     }
     if (hdr->e_ident[EI_DATA] != ELFDATA2LSB)
     {
-        println("[ERROR] Unsupported ELF File byte order.\n");
+        println("[ELF] Unsupported ELF File byte order.\n");
         return false;
     }
     if (hdr->e_machine != EM_X86_64)
     {
-        println("[ERROR] Unsupported ELF File target.\n");
+        println("[ELF] Unsupported ELF File target.\n");
         return false;
     }
     if (hdr->e_ident[EI_VERSION] != EV_CURRENT)
     {
-        println("[ERROR] Unsupported ELF File version.\n");
+        println("[ELF] Unsupported ELF File version.\n");
         return false;
     }
     if (hdr->e_type != ET_REL && hdr->e_type != ET_EXEC)
     {
-        println("[ERROR] Unsupported ELF File type.\n");
+        println("[ELF] Unsupported ELF File type.\n");
         return false;
     }
     return true;
@@ -115,7 +115,7 @@ int elf_load_stage2(Elf64_Ehdr *hdr)
                 int result = elf_do_reloc(hdr, reltab, section);
                 if (result == ELF_RELOC_ERR)
                 {
-                    println("[ERROR] Failed to relocate symbol");
+                    println("[ELF] Failed to relocate symbol");
                     return ELF_RELOC_ERR;
                 }
             }
@@ -130,13 +130,13 @@ void *elf_load_rel(Elf64_Ehdr *hdr)
     result = elf_load_stage1(hdr);
     if (result == ELF_RELOC_ERR)
     {
-        println("[ERROR] Unable to load ELF file.\n");
+        println("[ELF] Unable to load ELF file.\n");
         return NULL;
     }
     result = elf_load_stage2(hdr);
     if (result == ELF_RELOC_ERR)
     {
-        println("[ERROR] Unable to load ELF file.\n");
+        println("[ELF] Unable to load ELF file.\n");
         return NULL;
     }
     return (void *)hdr->e_entry;
@@ -147,7 +147,7 @@ void *elf_load_file(void *file)
     Elf64_Ehdr *hdr = (Elf64_Ehdr *)file;
     if (!elf_check_supported(hdr))
     {
-        println("[ERROR] ELF File cannot be loaded.\n");
+        println("[ELF] ELF File cannot be loaded.\n");
         return;
     }
     switch (hdr->e_type)
@@ -184,7 +184,7 @@ int elf_get_symval(Elf64_Ehdr *hdr, int table, unsigned int idx)
     uint64_t symtab_entries = symtab->sh_size / symtab->sh_entsize;
     if (idx >= symtab_entries)
     {
-        println("[ERROR] Symbol Index out of Range");
+        println("[ELF] Symbol Index out of Range");
         return ELF_RELOC_ERR;
     }
 
@@ -204,7 +204,7 @@ int elf_get_symval(Elf64_Ehdr *hdr, int table, unsigned int idx)
                 return 0;
             else
             {
-                println("[ERROR] Undefined External Symbol");
+                println("[ELF] Undefined External Symbol");
                 return ELF_RELOC_ERR;
             }
         }
@@ -242,7 +242,7 @@ int elf_do_reloc(Elf64_Ehdr *hdr, Elf64_Rel *rel, Elf64_Shdr *reltab)
         *ref = DO_x86_64_PC64(symval, *ref, (int)ref);
         break;
     default:
-        println("[ERROR] Unsupported Relocation Type");
+        println("[ELF] Unsupported Relocation Type");
         return ELF_RELOC_ERR;
     }
     return symval;
