@@ -21,6 +21,10 @@ You will also need A UNIX utility set, such as GNU coreutils (This is only requi
 
 # Obtaining Limine
 
+## Prequisites
+
+- `make`
+  
 Limine is the bootloader of choice for Nucleus. To obtain Limine, simply "cd" into the "lib" folder and run the following commands:
 
 ```
