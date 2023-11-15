@@ -10,13 +10,23 @@ Nucleus is the biggest component of a much bigger project called Atom OS, which 
 
 ## Prequisites
 
-- A UNIX utility set, such as GNU coreutils (This is only required if you are using a non UNIX-like Host; If you are running OS X or GNU/Linux, you do not need to do this step)
-- x86_64-elf-gcc
-- x86_64-elf-ld
-- nasm
-- xorriso
-- qemu
-- python3
+- `x86_64-elf-gcc`
+- `x86_64-elf-ld`
+- `nasm`
+- `xorriso`
+- `qemu`
+- `python3`
+
+You will also need A UNIX utility set, such as GNU coreutils (This is only required if you are using a non UNIX-like Host, e.g: If you are running OS X or GNU/Linux, you do not need to do this step).
+
+# Obtaining Limine
+
+Limine is the bootloader of choice for Nucleus. To obtain Limine, simply "cd" into the "lib" folder and run the following commands:
+
+```
+git clone https://github.com/limine-bootloader/limine.git --branch=v5.x-branch-binary --depth=1
+make -C limine
+```
 
 # Nucleus Build Script
 
