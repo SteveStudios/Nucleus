@@ -1,4 +1,4 @@
-![](https://github.com/SteveStudios/Nucleus/assets/90519370/f3798e87-b38d-4bab-b50e-3ac72878cd60)
+![logo](https://github.com/SteveStudios/Nucleus/assets/90519370/d19139d5-efc6-45e8-b7fe-a90063f319f8)
 
 # Nucleus
 
