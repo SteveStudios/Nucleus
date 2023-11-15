@@ -228,9 +228,9 @@ extern "C"
         HBA_PORT *port;
     };
 
-    void probe_port(HBA_MEM *abar);
-    bool read(HBA_PORT *, uint32_t, uint32_t, uint32_t, uint16_t *);
-    bool write(HBA_PORT *, uint32_t, uint32_t, uint32_t, uint16_t *);
+    struct port_data **probe_port(HBA_MEM *abar);
+    bool read(struct port_data *, uint32_t, uint32_t, uint32_t, char *);
+    bool write(struct port_data *, uint32_t, uint32_t, uint32_t, char *);
 
 #ifdef __cplusplus
 }

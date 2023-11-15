@@ -1,4 +1,4 @@
-# build.py - Atom OS Build Script
+# build.py - Nucleus Build Script
 # Created 2023/7/10 by Stephen Byrne
 
 import os
@@ -57,7 +57,7 @@ for ext in supportedExtensions:
         filesToCompile.append(file.split("/")[len(file.split("/")) - 1].split(".")[0] + ".o")
         print("- " + file + " -> " + "bin/obj/" + file.split("/")[len(file.split(".")[0].split("/")) - 1].split(".")[0] + ".o")
 
-argArr = ["x86_64-elf-ld", "-o", "bin/iso/Atom OS.elf"]
+argArr = ["x86_64-elf-ld", "-o", "bin/iso/Nucleus.elf"]
 
 for file in filesToCompile:
     argArr.append("bin/obj/" + file)
@@ -87,14 +87,14 @@ if (os.path.exists("bin/iso")):
                     "--protective-msdos-label", 
                     "bin/iso", 
                     "-o", 
-                    "bin/iso/Atom OS.iso"])
+                    "bin/iso/Nucleus.iso"])
     
     if platform.system() == "Windows":
-        subprocess.run(["lib/limine/limine.exe", "bios-install", "bin/iso/Atom OS.iso"])
+        subprocess.run(["lib/limine/limine.exe", "bios-install", "bin/iso/Nucleus.iso"])
     elif platform.system() == "Darwin":
-        subprocess.run([os.getcwd() + "/lib/limine/limine", "bios-install", "bin/iso/Atom OS.iso"])
+        subprocess.run([os.getcwd() + "/lib/limine/limine", "bios-install", "bin/iso/Nucleus.iso"])
     elif platform.system() == "Linux":
-        subprocess.run(["./lib/limine/limine", "bios-install", "bin/iso/Atom OS.iso"])
+        subprocess.run(["./lib/limine/limine", "bios-install", "bin/iso/Nucleus.iso"])
 
 useQemu = input("[INFO] Would you like to run QEMU? (Y/n) ")
 if (useQemu.replace(" ", "").lower() != "y" and useQemu.replace(" ", "").lower() != "n" and useQemu.replace(" ", "").lower() != "" and useQemu.replace(" ", "").lower() != "yes" and useQemu.replace(" ", "").lower() != "no" ):
@@ -102,8 +102,8 @@ if (useQemu.replace(" ", "").lower() != "y" and useQemu.replace(" ", "").lower()
 
 match useQemu.replace(" ", "").lower():
     case "y" | "yes":
-        subprocess.run(["qemu-system-x86_64", "-boot", "d", "-cdrom", 'bin/iso/Atom OS.iso', "-d", "int", "-m", "2048", "-M", "smm=off"])
+        subprocess.run(["qemu-system-x86_64", "-boot", "d", "-cdrom", 'bin/iso/Nucleus.iso', "-d", "int", "-m", "222048", "-M", "smm=off"])
     case "":
-        subprocess.run(["qemu-system-x86_64", "-boot", "d", "-cdrom", 'bin/iso/Atom OS.iso', "-d", "int", "-m", "2048", "-M", "smm=off"])
+        subprocess.run(["qemu-system-x86_64", "-boot", "d", "-cdrom", 'bin/iso/Nucleus.iso', "-d", "int", "-m", "222048", "-M", "smm=off"])
     case "n" | "no":
         exit(0)

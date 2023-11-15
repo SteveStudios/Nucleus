@@ -21,6 +21,7 @@
 // First actions the kernel takes after starting up
 void kernel_awake()
 {   
+    println("\n");
     println("[INFO] Initializing Allocator...");
     init_mem();
     println("[INFO] Initialized Allocator");
@@ -46,16 +47,20 @@ void kernel_enter(void)
 {
     kernel_awake();
 
+    println("[INFO] Initializing PCI Driver...");
+    pci_init();
+    println("[INFO] Initialized PCI Driver");
+
+    println("[INFO] Initializing SATA Driver...");
+    init_ext4_superblock();
+    println("[INFO] Initialized SATA Driver");
+
     println("[INFO] Enabling Interrupts...");
     
     // Enable interrupts
     asm volatile("sti");
     
     println("[INFO] Enabled Interrupts");
-
-    println("[INFO] Initializing PCI Driver...");
-    pci_init();
-    println("[INFO] Initialized PCI Driver");
 
     println("[INFO] Nucleus booted successfully");
 

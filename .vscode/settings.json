@@ -35,6 +35,20 @@
         "new": "c",
         "memalloc.h": "c",
         "ext4.h": "c",
-        "memory_resource": "c"
+        "memory_resource": "c",
+        "__bit_reference": "c",
+        "bitset": "c",
+        "unordered_map": "c",
+        "__node_handle": "c",
+        "atomic": "c",
+        "__memory": "c",
+        "limits": "c",
+        "optional": "c",
+        "ratio": "c",
+        "system_error": "c",
+        "tuple": "c",
+        "vector": "c",
+        "__locale": "c",
+        "mem.h": "c"
     },
 }

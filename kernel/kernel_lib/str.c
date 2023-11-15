@@ -26,3 +26,16 @@ int strcmp(const char *p1, const char *p2)
     } while (c1 == c2);
     return c1 - c2;
 }
+
+void strcat(char des[], const char src[])
+{
+    int i = 0, j = 0;
+    while (des[i] != '\0')
+        i += 1;
+    while (src[j] != '\0')
+    {
+        des[i + j] = src[j];
+        j += 1;
+    }
+    des[i + j] = '\0';
+}
