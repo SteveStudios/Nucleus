@@ -8,7 +8,6 @@
 #include "kernel_lib/io.h"
 
 #include "drivers/keyboardps2.h"
-#include "drivers/sata.h"
 #include "drivers/pci.h"
 
 #include "handlers/handler_keyboardps2.h"

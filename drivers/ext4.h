@@ -9,7 +9,8 @@ extern "C"
 #endif
 
 #include <stdint.h>
-#include "sata.h"
+#include "ahci.h"
+#include "../lib/liballoc/liballoc.h"
 #include "../kernel_lib/str.h"
 #include "../kernel_lib/mem.h"
 

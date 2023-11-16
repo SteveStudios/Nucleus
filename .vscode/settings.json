@@ -51,6 +51,7 @@
         "__locale": "c",
         "mem.h": "c",
         "variant": "c",
-        "pci.h": "c"
+        "pci.h": "c",
+        "macros.h": "c"
     },
 }

@@ -13,33 +13,27 @@ void init_ext4_superblock(int port_num)
 
     struct port_data **port = probe_port(&mem);
 
-    char *sb_buf;
-    read(port[port_num], 1024, 0, 1, sb_buf);
+    unsigned char sb_buf;
+    read(port[port_num], 1024, 1024 << 32, 1, &sb_buf);
 
-    ext4_superblock *superblock = (ext4_superblock*)&sb_buf;
+    ext4_superblock *superblock = (ext4_superblock *)&sb_buf;
+        
+    println_int((int)(superblock->total_inodes));
 
-    inodes = (ext4_inode *)malloc(superblock->total_inodes * sizeof(ext4_inode));
-    bgdts = (ext4_bgdt *)malloc((int)((int)superblock->blocks_per_group / (int)(1024 << superblock->block_size)) * sizeof(ext4_bgdt));
-    
+    inodes = (ext4_inode *)malloc((int)(superblock->total_inodes) * sizeof(ext4_inode));
+    bgdts = (ext4_bgdt *)malloc((int)(superblock->blocks_per_group / (1024 << superblock->block_size)) * sizeof(ext4_bgdt));
+
     int i;
-    for (i = 0; i < (int)((int)superblock->blocks_per_group / (int)(1024 << superblock->block_size)); i++)
+    for (i = 0; i < (int)(superblock->blocks_per_group / (1024 << superblock->block_size)); i++)
     {
-        char* bgdt_buf;
-        read(port[port_num], (uint32_t)((int)((int)superblock->blocks_per_group / (int)(1024 << superblock->block_size)) * i), 0, 1, bgdt_buf);
+        unsigned char bgdt_buf;
+        read(port[port_num], (uint32_t)((int)(superblock->blocks_per_group / (1024 << superblock->block_size)) * i), (uint32_t)((int)(superblock->blocks_per_group / (1024 << superblock->block_size)) * i) << 32, 1, &bgdt_buf);
 
-        ext4_bgdt *bgdt = (ext4_superblock*)&bgdt_buf;
+        ext4_bgdt *bgdt = (ext4_bgdt *)&bgdt_buf;
         bgdts[i] = bgdt;
     }
 
-    for (i = 1; i < (int)superblock->total_inodes; i++)
+    for (i = 2; i < (int)superblock->total_inodes; i++)
     {
-        int group_loc = i / (int)superblock->total_inodes;
-        int inode_index = i % (int)superblock->total_inodes;
-        int containing_block = (inode_index * superblock->total_inodes) / (int)(1024 << superblock->block_size);
-
-        char* inode_buf;
-        read(port[port_num], (uint32_t)((int)(containing_block * (int)(1024 << superblock->block_size))), 0, 1, inode_buf);
-
-        println_int((int)bgdts[group_loc]->inode_table_start_addr);
     }
 }

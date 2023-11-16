@@ -1,7 +1,7 @@
 // sata.c - SATA AHCI Driver
 // Created 2023/11/11 by Stephen Byrne
 
-#include "sata.h"
+#include "ahci.h"
 
 HBA_MEM *glob_abar;
 
@@ -108,7 +108,7 @@ int find_cmdslot(HBA_PORT *port)
 	return -1;
 }
 
-bool write(struct port_data *port, uint32_t startl, uint32_t starth, uint32_t count, char *buf)
+bool write(struct port_data *port, uint32_t startl, uint32_t starth, uint32_t count, unsigned char *buf)
 {
 	port->port->is = 0xffff;
 	int slot = find_cmdslot(port->port);
@@ -182,7 +182,7 @@ bool write(struct port_data *port, uint32_t startl, uint32_t starth, uint32_t co
 	return 1;
 }
 
-bool read(struct port_data *pdata, uint32_t startl, uint32_t starth, uint32_t count, char *buf)
+bool read(struct port_data *pdata, uint32_t startl, uint32_t starth, uint32_t count, unsigned char *buf)
 {
 	pdata->port->is = (uint32_t)-1;
 	int spin = 0;
@@ -201,64 +201,7 @@ bool read(struct port_data *pdata, uint32_t startl, uint32_t starth, uint32_t co
 	int i;
 	for (i = 0; i < cmdheader->prdtl - 1; i++)
 	{
-		cmdtbl->prdt_entry[i].dba = (uint32_t)(*buf & 0xffffffff);
-		cmdtbl->prdt_entry[i].dbau = (uint32_t)(((*buf) >> 32) & 0xffffffff);
-		cmdtbl->prdt_entry[i].dbc = 8 * 1024;
-		cmdtbl->prdt_entry[i].i = 1;
 		buf += 4 * 1024;
-		count -= 16;
-	}
-
-	cmdtbl->prdt_entry[i].dba = (uint32_t)(*buf & 0xffffffff);
-	cmdtbl->prdt_entry[i].dbau = (uint32_t)((*buf >> 32) & 0xffffffff);
-	cmdtbl->prdt_entry[i].dbc = count << 9;
-	cmdtbl->prdt_entry[i].i = 1;
-
-	FIS_REG_H2D *cmdfis = (FIS_REG_H2D *)(&cmdtbl->cfis);
-
-	cmdfis->fis_type = FIS_TYPE_REG_H2D;
-	cmdfis->c = 1;
-	cmdfis->command = 0x25;
-
-	cmdfis->lba0 = (uint8_t)startl;
-	cmdfis->lba1 = (uint8_t)(startl >> 8);
-	cmdfis->lba2 = (uint8_t)(startl >> 16);
-	cmdfis->device = 1 << 6;
-
-	cmdfis->lba3 = (uint8_t)(startl >> 24);
-	cmdfis->lba4 = (uint8_t)starth;
-	cmdfis->lba5 = (uint8_t)(starth >> 8);
-
-	cmdfis->countl = (count & 0xff);
-	cmdfis->counth = (count >> 8);
-
-	while ((pdata->port->tfd & (ATA_DEV_BUSY | ATA_DEV_DRQ)) && spin < 1000000)
-	{
-		spin++;
-	}
-	if (spin == 1000000)
-	{
-		println("[SATA] Port is idle");
-		return 0;
-	}
-
-	pdata->port->ci = (1 << slot);
-
-	while (true)
-	{
-		if ((pdata->port->ci & (1 << slot)) == 0)
-			break;
-		if (pdata->port->is & (1 << 30))
-		{
-			println("[SATA] Error writing to Disk");
-			return 0;
-		}
-	}
-
-	if (pdata->port->is & (1 << 30))
-	{
-		println("[SATA] Error writing to Disk");
-		return 0;
 	}
 
 	return 1;
