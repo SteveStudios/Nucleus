@@ -105,7 +105,6 @@ int find_cmdslot(HBA_PORT *port)
 			return i;
 		slots >>= 1;
 	}
-	println("[SATA] Could not find a free command");
 	return -1;
 }
 

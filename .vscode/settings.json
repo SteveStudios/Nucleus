@@ -49,6 +49,8 @@
         "tuple": "c",
         "vector": "c",
         "__locale": "c",
-        "mem.h": "c"
+        "mem.h": "c",
+        "variant": "c",
+        "pci.h": "c"
     },
 }

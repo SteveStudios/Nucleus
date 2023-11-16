@@ -11,7 +11,7 @@ extern "C"
 #include <stdint.h>
 #include <stdbool.h>
 #include "../kernel_lib/io.h"
-#include "../contrib/liballoc/liballoc.h"
+#include "../lib/liballoc/liballoc.h"
 #include "../kernel_lib/mem.h"
 
 	typedef uint64_t Elf64_Half;

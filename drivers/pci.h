@@ -10,7 +10,7 @@ extern "C"
 
 #include <stdint.h>
 #include <stdbool.h>
-#include "../contrib/liballoc/liballoc.h"
+#include "../lib/liballoc/liballoc.h"
 
     struct _pci_driver;
 

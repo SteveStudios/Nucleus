@@ -10,10 +10,10 @@ extern "C"
 
 #include <stdbool.h>
 
-#include "../../lib/limine/limine.h"
+#include "../lib/limine/limine.h"
 
-#include "../../lib/flanterm/flanterm.h"
-#include "../../lib/flanterm/backends/fb.h"
+#include "../lib/flanterm/flanterm.h"
+#include "../lib/flanterm/backends/fb.h"
 
 #include "str.h"
 
@@ -21,6 +21,9 @@ extern "C"
 
     void println(const char *str);
     void print(const char *str);
+
+    void println_int(int n);
+    void print_int(int n);
 
     void clear_term();
 

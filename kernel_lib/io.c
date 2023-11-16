@@ -33,6 +33,58 @@ void clear_term()
                                      framebuffer_request.response->framebuffers[0]->pitch);
 }
 
+
+void number_to_character(int n)
+{
+    int rev = 0, r = 0;
+    while (n > 0)
+    {
+        r = n % 10;
+        rev = rev * 10 + r;
+        n = n / 10;
+    }
+
+    while (rev > 0)
+    {
+        r = rev % 10;
+
+        switch (r)
+        {
+        case 1:
+            print("1");
+            break;
+        case 2:
+            print("2");
+            break;
+        case 3:
+            print("3");
+            break;
+        case 4:
+            print("4");
+            break;
+        case 5:
+            print("5");
+            break;
+        case 6:
+            print("6");
+            break;
+        case 7:
+            print("7");
+            break;
+        case 8:
+            print("8");
+            break;
+        case 9:
+            print("9");
+            break;
+        case 0:
+            print("0");
+            break;
+        }
+        rev = rev / 10;
+    }
+}
+
 // Write a string to video memory, printing a newline afterwards
 void println(const char *str)
 {
@@ -44,6 +96,19 @@ void println(const char *str)
 void print(const char *str)
 {
     flanterm_write(get_ft_ctx(), str, strlen(str));
+}
+
+// Write a string to video memory, printing a newline afterwards
+void println_int(int n)
+{
+    number_to_character(n);
+    print("\n");
+}
+
+// Write a string to video memory
+void print_int(int n)
+{
+    number_to_character(n);
 }
 
 // Prints a kernel panic warning

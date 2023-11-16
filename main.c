@@ -51,9 +51,9 @@ void kernel_enter(void)
     pci_init();
     println("[INFO] Initialized PCI Driver");
 
-    println("[INFO] Initializing SATA Driver...");
-    init_ext4_superblock();
-    println("[INFO] Initialized SATA Driver");
+    println("[EXT4] Initializing Filesystem...");
+    init_ext4_superblock(0);
+    println("[EXT4] Initialized Filesystem");
 
     println("[INFO] Enabling Interrupts...");
     
