@@ -102,8 +102,8 @@ if (useQemu.replace(" ", "").lower() != "y" and useQemu.replace(" ", "").lower()
 
 match useQemu.replace(" ", "").lower():
     case "y" | "yes":
-        subprocess.run(["qemu-system-x86_64", "-boot", "d", "-cdrom", 'bin/iso/Nucleus.iso', "-d", "int", "-m", "222048", "-M", "smm=off"])
+        subprocess.run(["qemu-system-x86_64", "-boot", "d", "-cdrom", 'bin/iso/Nucleus.iso', "-d", "int", "-m", "2048", "-M", "smm=off"])
     case "":
-        subprocess.run(["qemu-system-x86_64", "-boot", "d", "-cdrom", 'bin/iso/Nucleus.iso', "-d", "int", "-m", "222048", "-M", "smm=off"])
+        subprocess.run(["qemu-system-x86_64", "-boot", "d", "-cdrom", 'bin/iso/Nucleus.iso', "-d", "int", "-m", "2048", "-M", "smm=off"])
     case "n" | "no":
         exit(0)
