@@ -36,6 +36,11 @@ void clear_term()
 
 void number_to_character(int n)
 {
+    if (n == 0) {
+        print("0");
+        return;
+    }
+
     int rev = 0, r = 0;
     while (n > 0)
     {

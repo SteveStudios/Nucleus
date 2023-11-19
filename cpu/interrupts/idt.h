@@ -68,6 +68,8 @@ extern "C"
     extern void *irq14();
     extern void *irq15();
 
+    extern void *software_interrupt();
+
     void idt_init();
 
 #ifdef __cplusplus

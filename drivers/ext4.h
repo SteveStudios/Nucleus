@@ -9,6 +9,7 @@ extern "C"
 #endif
 
 #include <stdint.h>
+#include "pci.h"
 #include "ahci.h"
 #include "../lib/liballoc/liballoc.h"
 #include "../kernel_lib/str.h"
@@ -136,7 +137,7 @@ extern "C"
         unsigned long long os_specific_value_2;
     } ext4_inode;
 
-    void init_ext4_superblock(int port_num);
+    void reload_ext4(int port_num);
 
 #ifdef __cplusplus
 }

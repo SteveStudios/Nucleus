@@ -20,7 +20,6 @@
 // First actions the kernel takes after starting up
 void kernel_awake()
 {   
-    println("\n");
     println("[INFO] Initializing Allocator...");
     init_mem();
     println("[INFO] Initialized Allocator");
@@ -51,7 +50,7 @@ void kernel_enter(void)
     println("[INFO] Initialized PCI Driver");
 
     println("[EXT4] Initializing Filesystem...");
-    init_ext4_superblock(0);
+    reload_ext4(0);
     println("[EXT4] Initialized Filesystem");
 
     println("[INFO] Enabling Interrupts...");

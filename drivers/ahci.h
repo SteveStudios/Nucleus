@@ -25,74 +25,74 @@ extern "C"
 
     typedef struct tagFIS_REG_H2D
     {
-        uint8_t fis_type;
+        uint32_t fis_type;
 
-        uint8_t pmport : 4;
-        uint8_t rsv0 : 3;
-        uint8_t c : 1;
+        uint32_t pmport : 4;
+        uint32_t rsv0 : 3;
+        uint32_t c : 1;
 
-        uint8_t command;
-        uint8_t featurel;
+        uint32_t command;
+        uint32_t featurel;
 
-        uint8_t lba0;
-        uint8_t lba1;
-        uint8_t lba2;
-        uint8_t device;
+        uint32_t lba0;
+        uint32_t lba1;
+        uint32_t lba2;
+        uint32_t device;
 
-        uint8_t lba3;
-        uint8_t lba4;
-        uint8_t lba5;
-        uint8_t featureh;
+        uint32_t lba3;
+        uint32_t lba4;
+        uint32_t lba5;
+        uint32_t featureh;
 
-        uint8_t countl;
-        uint8_t counth;
-        uint8_t icc;
-        uint8_t control;
+        uint32_t countl;
+        uint32_t counth;
+        uint32_t icc;
+        uint32_t control;
 
-        uint8_t rsv1[4];
+        uint32_t rsv1[4];
     } FIS_REG_H2D;
 
     typedef struct tagFIS_REG_D2H
     {
 
-        uint8_t fis_type;
+        uint32_t fis_type;
 
-        uint8_t pmport : 4;
-        uint8_t rsv0 : 2;
-        uint8_t i : 1;
-        uint8_t rsv1 : 1;
+        uint32_t pmport : 4;
+        uint32_t rsv0 : 2;
+        uint32_t i : 1;
+        uint32_t rsv1 : 1;
 
-        uint8_t status;
-        uint8_t error;
+        uint32_t status;
+        uint32_t error;
 
-        uint8_t lba0;
-        uint8_t lba1;
-        uint8_t lba2;
-        uint8_t device;
+        uint32_t lba0;
+        uint32_t lba1;
+        uint32_t lba2;
+        uint32_t device;
 
-        uint8_t lba3;
-        uint8_t lba4;
-        uint8_t lba5;
-        uint8_t rsv2;
+        uint32_t lba3;
+        uint32_t lba4;
+        uint32_t lba5;
+        uint32_t rsv2;
 
-        uint8_t countl;
-        uint8_t counth;
-        uint8_t rsv3[2];
+        uint32_t countl;
+        uint32_t counth;
+        uint32_t rsv3[2];
 
-        uint8_t rsv4[4];
+        uint32_t rsv4[4];
     } FIS_REG_D2H;
 
     typedef struct tagFIS_DMA_SETUP
     {
-        uint8_t fis_type;
+        uint32_t fis_type;
 
-        uint8_t pmport : 4;
-        uint8_t rsv0 : 1;
-        uint8_t d : 1;
-        uint8_t i : 1;
-        uint8_t a : 1;
+        uint32_t pmport : 4;
+        uint32_t rsv0 : 1;
+        uint32_t d : 1;
+        uint32_t i : 1;
+        uint32_t a : 1;
 
-        uint8_t rsved[2];
+        uint32_t rsved[2];
 
         uint64_t DMAbufferID;
 
@@ -143,9 +143,9 @@ extern "C"
         uint32_t cap2;
         uint32_t bohc;
 
-        uint8_t rsv[0xA0 - 0x2C];
+        uint32_t rsv[0xA0 - 0x2C];
 
-        uint8_t vendor[0x100 - 0xA0];
+        uint32_t vendor[0x100 - 0xA0];
 
         HBA_PORT ports[1];
     } HBA_MEM;
@@ -153,30 +153,30 @@ extern "C"
     typedef volatile struct tagHBA_FIS
     {
         FIS_DMA_SETUP dsfis;
-        uint8_t pad0[4];
+        uint32_t pad0[4];
 
-        uint8_t pad1[12];
+        uint32_t pad1[12];
 
         FIS_REG_D2H rfis;
-        uint8_t pad2[4];
+        uint32_t pad2[4];
 
-        uint8_t ufis[64];
+        uint32_t ufis[64];
 
-        uint8_t rsv[0x100 - 0xA0];
+        uint32_t rsv[0x100 - 0xA0];
     } HBA_FIS;
 
     typedef struct tagHBA_CMD_HEADER
     {
-        uint8_t cfl : 5;
-        uint8_t a : 1;
-        uint8_t w : 1;
-        uint8_t p : 1;
+        uint32_t cfl : 5;
+        uint32_t a : 1;
+        uint32_t w : 1;
+        uint32_t p : 1;
 
-        uint8_t r : 1;
-        uint8_t b : 1;
-        uint8_t c : 1;
-        uint8_t rsv0 : 1;
-        uint8_t pmp : 4;
+        uint32_t r : 1;
+        uint32_t b : 1;
+        uint32_t c : 1;
+        uint32_t rsv0 : 1;
+        uint32_t pmp : 4;
 
         uint16_t prdtl;
 
@@ -214,9 +214,9 @@ extern "C"
 
     typedef struct tagHBA_CMD_TBL
     {
-        uint8_t cfis[64];
-        uint8_t acmd[16];
-        uint8_t rsv[48];
+        uint32_t cfis[64];
+        uint32_t acmd[16];
+        uint32_t rsv[48];
         HBA_PRDT_ENTRY prdt_entry[1];
     } HBA_CMD_TBL;
 
@@ -229,8 +229,8 @@ extern "C"
     };
 
     struct port_data **probe_port(HBA_MEM *abar);
-    bool read(struct port_data *, uint32_t, uint32_t, uint32_t, unsigned char *);
-    bool write(struct port_data *, uint32_t, uint32_t, uint32_t, unsigned char *);
+    bool read(struct port_data *, uint32_t, uint32_t, uint32_t, char *);
+    bool write(struct port_data *, uint32_t, uint32_t, uint32_t, char *);
 
 #ifdef __cplusplus
 }

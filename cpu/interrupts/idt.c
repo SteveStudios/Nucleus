@@ -226,6 +226,9 @@ void idt_init()
 	idt_set_descriptor(46, irq14);
 	idt_set_descriptor(47, irq15);
 
+	// For syscalls
+	idt_set_descriptor(80, software_interrupt);
+
 	// Enable non-maskable interrupts
 	nm_interrupt_enable();
 

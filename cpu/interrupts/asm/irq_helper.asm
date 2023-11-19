@@ -17,9 +17,10 @@ global irq12
 global irq13
 global irq14
 global irq15
+global software_interrupt
 
 [extern handle_interrupt]
-[extern reload_segment_registers]
+[extern syscall]
 
 irq0:
 	push rax
@@ -362,6 +363,33 @@ irq15:
 
 	mov rdi, 15
 	call handle_interrupt
+
+    pop rdi
+    pop rsi
+    pop rbp
+    pop rbx
+    pop rdx
+    pop rcx
+    pop rax
+
+    iretq
+
+software_interrupt:
+	push rax
+    push rcx
+    push rdx
+    push rbx
+    push rbp
+    push rsi
+    push rdi
+
+    mov rdi, rax
+    mov rsi, rdi
+    mov rdx, rsi
+    mov r10, rdx
+    mov r8, r9
+
+	call syscall
 
     pop rdi
     pop rsi
