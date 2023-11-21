@@ -8,6 +8,8 @@ extern "C"
 {
 #endif
 
+#define DIRECTORY_ENTRY_SIZE 255
+
 #define AWAIT(condition)     \
     if (!condition)          \
     {                        \

@@ -9,6 +9,7 @@
 
 #include "drivers/keyboardps2.h"
 #include "drivers/pci.h"
+#include "drivers/ext4.h"
 
 #include "handlers/handler_keyboardps2.h"
 

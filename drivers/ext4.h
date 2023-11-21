@@ -15,7 +15,7 @@ extern "C"
 #include "../kernel_lib/str.h"
 #include "../kernel_lib/mem.h"
 
-    typedef struct __attribute__((packed))
+    typedef struct __attribute__((__packed__)) 
     {
         unsigned int total_inodes;
         unsigned int total_blocks;
@@ -73,7 +73,7 @@ extern "C"
         uint64_t journal_inode_backup_32;
     } ext4_superblock;
 
-    typedef struct __attribute__((packed))
+    typedef struct __attribute__((__packed__)) 
     {
         unsigned int block_usage_bitmap_addr;
         unsigned int inode_usage_bitmap_addr;
@@ -102,13 +102,13 @@ extern "C"
         unsigned int reserved;
     } ext4_bgdt;
 
-    typedef struct __attribute__((packed))
+    typedef struct __attribute__((__packed__)) 
     {
         unsigned short types_permissions;
         unsigned short user_id;
         unsigned int byte_size;
         unsigned int posix_last_access_time;
-        unsigned int posix_creation_time;
+        unsigned int posix_change_time;
         unsigned int posix_mod_time;
         unsigned int posix_del_time;
         unsigned short group_id;
@@ -116,26 +116,71 @@ extern "C"
         unsigned int disk_sectors;
         unsigned int flags;
         unsigned int os_specific_value_1;
-        unsigned int direct_block_ptr_1;
-        unsigned int direct_block_ptr_2;
-        unsigned int direct_block_ptr_3;
-        unsigned int direct_block_ptr_4;
-        unsigned int direct_block_ptr_5;
-        unsigned int direct_block_ptr_6;
-        unsigned int direct_block_ptr_7;
-        unsigned int direct_block_ptr_8;
-        unsigned int direct_block_ptr_9;
-        unsigned int direct_block_ptr_10;
-        unsigned int direct_block_ptr_11;
-        unsigned int singly_indirect_block_ptr;
-        unsigned int doubly_indirect_block_ptr;
-        unsigned int triply_indirect_block_ptr;
+        uint64_t block : 60;
         unsigned int gen_number;
         unsigned int extended_attribute_block;
         unsigned int file_directory_size_32;
         unsigned int fragment_block_address;
-        unsigned long long os_specific_value_2;
+        unsigned long long os_specific_value_2 : 12;
+        unsigned short byte_size_32;
+        unsigned short checksum;
+        unsigned int posix_last_access_time_32;
+        unsigned int posix_change_time_32;
+        unsigned int posix_mod_time_32;
+        unsigned int posix_extra_access_time_bits;
+        unsigned int posix_creation_time;
+        unsigned int posix_creation_time_32;
+        unsigned int version;
+        unsigned int project_id;
     } ext4_inode;
+
+    typedef struct __attribute__((__packed__)) 
+    {
+        unsigned int inode;
+        unsigned short dir_entry_len;
+        unsigned short name_len;
+        char name[DIRECTORY_ENTRY_SIZE];
+    } ext4_dir_entry;
+
+    typedef struct __attribute__((__packed__)) 
+    {
+        unsigned int inode;
+        unsigned short dir_entry_len;
+        uint8_t name_len;
+        uint8_t file_type;
+        char name[DIRECTORY_ENTRY_SIZE];
+    } ext4_dir_entry_2;
+
+    typedef struct __attribute__((__packed__)) 
+    {
+        unsigned int hash;
+        unsigned int minor_hash;
+    } ext4_extended_dir_entry_2;
+
+    typedef struct __attribute__((__packed__)) 
+    {
+        unsigned int det_reserved_zero1;
+        unsigned short det_rec_len;
+        uint8_t det_reserved_zero2;
+        uint8_t det_reserved_ft;
+        unsigned int checksum;
+    } ext4_dir_entry_tail;
+
+    typedef struct __attribute__((__packed__)) 
+    {
+        unsigned short magic_number;
+        unsigned short valid_entries;
+        unsigned short extent_tree_depth;
+        unsigned short extent_tree_gen;
+    } ext4_extent_header;
+
+    typedef struct __attribute__((__packed__)) 
+    {
+        unsigned int block;
+        unsigned int leaf;
+        unsigned int leaf_high;
+        unsigned int unused;
+    } ext4_extent_internal_nodes;
 
     void reload_ext4(int port_num);
 

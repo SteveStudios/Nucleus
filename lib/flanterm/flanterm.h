@@ -34,6 +34,8 @@ extern "C" {
 #include <stdint.h>
 #include <stdbool.h>
 
+#include "../liballoc/liballoc.h"
+
 #define FLANTERM_MAX_ESC_VALUES 16
 
 #define FLANTERM_CB_DEC 10

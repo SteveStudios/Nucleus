@@ -101,6 +101,9 @@ void flanterm_context_reinit(struct flanterm_context *ctx) {
     ctx->oob_output = FLANTERM_OOB_OUTPUT_ONLCR;
 }
 
+int lines_printed;
+extern char **_std_in;
+
 static void flanterm_putchar(struct flanterm_context *ctx, uint8_t c);
 
 void flanterm_write(struct flanterm_context *ctx, const char *buf, size_t count) {
@@ -111,6 +114,22 @@ void flanterm_write(struct flanterm_context *ctx, const char *buf, size_t count)
     if (ctx->autoflush) {
         ctx->double_buffer_flush(ctx);
     }
+
+    lines_printed++;
+    _std_in[lines_printed] = buf;
+    
+    char **_std_in_temp = (char*)malloc(lines_printed);
+    for (int g = 0; g < lines_printed; g++)
+    {
+        _std_in_temp[g] = _std_in[g];
+    }
+    
+    _std_in = (char*)realloc(_std_in, lines_printed); 
+    for (int h = 0; h < lines_printed; h++)
+    {
+        _std_in[h] = _std_in_temp[h];
+    }
+    free(_std_in_temp);
 }
 
 static void sgr(struct flanterm_context *ctx) {

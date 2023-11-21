@@ -2,6 +2,8 @@
 // Created 2023/7/11 by Stephen Byrne
 #include "io.h"
 
+char **_std_in;
+
 static volatile struct limine_framebuffer_request framebuffer_request =
     {
         .id = LIMINE_FRAMEBUFFER_REQUEST,
@@ -15,6 +17,7 @@ struct flanterm_context *get_ft_ctx()
 {
     if (!initialized)
     {
+        _std_in = (char*)malloc(32);
         ft_ctx = flanterm_fb_simple_init((uint32_t *)framebuffer_request.response->framebuffers[0]->address,
                                          framebuffer_request.response->framebuffers[0]->width,
                                          framebuffer_request.response->framebuffers[0]->height,
@@ -93,14 +96,16 @@ void number_to_character(int n)
 // Write a string to video memory, printing a newline afterwards
 void println(const char *str)
 {
-    flanterm_write(get_ft_ctx(), str, strlen(str));
-    flanterm_write(get_ft_ctx(), "\n", strlen("\n"));
+    struct flanterm_context *context = get_ft_ctx();
+    flanterm_write(context, str, strlen(str));
+    flanterm_write(context, "\n", strlen("\n"));
 }
 
 // Write a string to video memory
 void print(const char *str)
 {
-    flanterm_write(get_ft_ctx(), str, strlen(str));
+    struct flanterm_context *context = get_ft_ctx();
+    flanterm_write(context, str, strlen(str));
 }
 
 // Write a string to video memory, printing a newline afterwards

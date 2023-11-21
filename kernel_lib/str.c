@@ -27,7 +27,7 @@ int strcmp(const char *p1, const char *p2)
     return c1 - c2;
 }
 
-void strcat(char des[], const char src[])
+void strcat(char *des, const char *src)
 {
     int i = 0, j = 0;
     while (des[i] != '\0')

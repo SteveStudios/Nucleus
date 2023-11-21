@@ -52,6 +52,13 @@
         "mem.h": "c",
         "variant": "c",
         "pci.h": "c",
-        "macros.h": "c"
+        "macros.h": "c",
+        "handler_syscall.h": "c",
+        "random": "c",
+        "ahci.h": "c",
+        "array": "c",
+        "string": "c",
+        "string_view": "c",
+        "span": "c"
     },
 }
