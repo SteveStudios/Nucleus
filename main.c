@@ -51,7 +51,7 @@ void kernel_enter(void)
     println("[INFO] Initialized PCI Driver");
 
     println("[EXT4] Initializing Filesystem...");
-    reload_ext4(0);
+    init_ext4(0);
     println("[EXT4] Initialized Filesystem");
 
     println("[INFO] Enabling Interrupts...");

@@ -105,5 +105,6 @@ match useQemu.replace(" ", "").lower():
         subprocess.run(["qemu-system-x86_64", "-boot", "d", "-cdrom", 'bin/iso/Nucleus.iso', "-d", "int", "-m", "2048", "-M", "smm=off"])
     case "":
         subprocess.run(["qemu-system-x86_64", "-boot", "d", "-cdrom", 'bin/iso/Nucleus.iso', "-d", "int", "-m", "2048", "-M", "smm=off"])
+        
     case "n" | "no":
         exit(0)
