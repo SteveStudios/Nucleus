@@ -37,37 +37,6 @@ static int check_type(HBA_PORT *port)
 #define HBA_PxCMD_FR 0x4000
 #define HBA_PxCMD_CR 0x8000
 
-void port_rebase(struct port_data *port, int portno, struct port_data *pdata)
-{
-	stop_cmd(port);
-
-	port->clb = AHCI_BASE + (portno << 10);
-	port->port->clbu = 0;
-	pdata->clb = port->clb;
-
-	memset((void *)(port->clb), 0, 1024);
-
-	port->fb = AHCI_BASE + (32 << 10) + (portno << 8);
-	port->port->fbu = 0;
-	pdata->fb = port->fb;
-	memset((void *)(port->fb), 0, 256);
-
-	HBA_CMD_HEADER *cmdheader = (HBA_CMD_HEADER *)(port->clb);
-	for (int i = 0; i < 32; i++)
-	{
-		cmdheader[i].prdtl = 8;
-		cmdheader[i].ctba = AHCI_BASE + (40 << 10) + (portno << 13) + (i << 8);
-		cmdheader[i].ctbau = 0;
-
-		pdata->ctba[i] = cmdheader[i].ctba;
-
-		memset((void *)cmdheader[i].ctba, 0, 256);
-	}
-
-	pdata->port = port;
-	start_cmd(port);
-}
-
 void start_cmd(struct port_data *port)
 {
 	while (port->port->cmd & HBA_PxCMD_CR)
@@ -92,6 +61,37 @@ void stop_cmd(struct port_data *port)
 	}
 }
 
+void port_rebase(struct port_data *port, int portno, struct port_data *pdata)
+{
+	stop_cmd(port);
+
+	port->clb = (int)(AHCI_BASE + (portno << 10));
+	port->port->clbu = 0;
+	pdata->clb = port->clb;
+
+	memset((void *)(port->clb), 0, 1024);
+
+	port->fb = (int)(AHCI_BASE + (32 << 10) + (portno << 8));
+	port->port->fbu = 0;
+	pdata->fb = port->fb;
+	memset((int*)(port->fb), 0, 256);
+
+	HBA_CMD_HEADER *cmdheader = (HBA_CMD_HEADER *)(port->clb);
+	for (int i = 0; i < 32; i++)
+	{
+		cmdheader[i].prdtl = 8;
+		cmdheader[i].ctba = AHCI_BASE + (40 << 10) + (portno << 13) + (i << 8);
+		cmdheader[i].ctbau = 0;
+
+		pdata->ctba[i] = cmdheader[i].ctba;
+
+		memset((void *)cmdheader[i].ctba, 0, 256);
+	}
+
+	pdata->port = port->port;
+	start_cmd(port);
+}
+
 #define ATA_DEV_BUSY 0x80
 #define ATA_DEV_DRQ 0x08
 
@@ -108,16 +108,16 @@ int find_cmdslot(HBA_PORT *port)
 	return -1;
 }
 
-bool write(struct port_data *pdata, uint32_t startl, uint32_t starth, uint32_t count, char *buf)
+bool write(struct port_data *pdata, uint64_t startl, uint64_t starth, uint64_t count, char *buf)
 {		
-	pdata->port->is = (uint32_t)0xffff;
+	pdata->port->is = (uint64_t)0xffff;
 	int slot = find_cmdslot(pdata->port);
 	if (slot == -1)
 		return 0;
 
 	HBA_CMD_HEADER *cmdheader = (HBA_CMD_HEADER *)pdata->clb;
 	cmdheader += slot;
-	cmdheader->cfl = sizeof(FIS_REG_H2D) / sizeof(uint32_t);
+	cmdheader->cfl = sizeof(FIS_REG_H2D) / sizeof(uint64_t);
 	cmdheader->w = 1;
 	cmdheader->c = 1;
 	cmdheader->p = 1;
@@ -127,16 +127,16 @@ bool write(struct port_data *pdata, uint32_t startl, uint32_t starth, uint32_t c
 	int i;
 	for (i = 0; i < cmdheader->prdtl - 1; i++)
 	{
-		cmdtbl->prdt_entry[i].dba = (uint32_t)buf;
-		cmdtbl->prdt_entry[i].dbau = (uint32_t)buf >> 32;
+		cmdtbl->prdt_entry[i].dba = (uint64_t)buf;
+		cmdtbl->prdt_entry[i].dbau = (uint64_t)buf >> 32;
 		cmdtbl->prdt_entry[i].dbc = 8 * 1024;
 		cmdtbl->prdt_entry[i].i = 1;
 		buf += 4 * 1024;
 		count -= 16;
 	}
 
-	cmdtbl->prdt_entry[i].dba = (uint32_t)buf;
-	cmdtbl->prdt_entry[i].dbau = (uint32_t)buf >> 32;
+	cmdtbl->prdt_entry[i].dba = (uint64_t)buf;
+	cmdtbl->prdt_entry[i].dbau = (uint64_t)buf >> 32;
 	cmdtbl->prdt_entry[i].dbc = count << 9;
 	cmdtbl->prdt_entry[i].i = 1;
 
@@ -145,14 +145,14 @@ bool write(struct port_data *pdata, uint32_t startl, uint32_t starth, uint32_t c
 	cmdfis->c = 1;
 	cmdfis->command = 0x35;
 
-	cmdfis->lba0 = (uint32_t)startl;
-	cmdfis->lba1 = (uint32_t)(startl >> 8);
-	cmdfis->lba2 = (uint32_t)(startl >> 16);
+	cmdfis->lba0 = (uint64_t)startl;
+	cmdfis->lba1 = (uint64_t)(startl >> 8);
+	cmdfis->lba2 = (uint64_t)(startl >> 16);
 	cmdfis->device = 1 << 6;
 
-	cmdfis->lba3 = (uint32_t)(startl >> 24);
-	cmdfis->lba4 = (uint32_t)starth;
-	cmdfis->lba5 = (uint32_t)(starth >> 8);
+	cmdfis->lba3 = (uint64_t)(startl >> 24);
+	cmdfis->lba4 = (uint64_t)starth;
+	cmdfis->lba5 = (uint64_t)(starth >> 8);
 
 	cmdfis->countl = count & 0xff;
 	cmdfis->counth = count >> 8;
@@ -176,9 +176,9 @@ bool write(struct port_data *pdata, uint32_t startl, uint32_t starth, uint32_t c
 	return 1;
 }
 
-bool read(struct port_data *pdata, uint32_t startl, uint32_t starth, uint32_t count, char *buf)
+bool read(struct port_data *pdata, uint64_t startl, uint64_t starth, uint64_t count, char *buf)
 {
-	pdata->port->is = (uint32_t)-1;
+	pdata->port->is = (uint64_t)-1;
 	int spin = 0;
 	int slot = find_cmdslot(pdata->port);
 	if (slot == -1)
@@ -186,7 +186,7 @@ bool read(struct port_data *pdata, uint32_t startl, uint32_t starth, uint32_t co
 
 	HBA_CMD_HEADER *cmdheader = (HBA_CMD_HEADER *)pdata->clb;
 	cmdheader += slot;
-	cmdheader->cfl = sizeof(FIS_REG_H2D) / sizeof(uint32_t);
+	cmdheader->cfl = sizeof(FIS_REG_H2D) / sizeof(uint64_t);
 	cmdheader->w = 0;
 	cmdheader->prdtl = (uint16_t)((count - 1) >> 4) + 1;
 
@@ -195,16 +195,16 @@ bool read(struct port_data *pdata, uint32_t startl, uint32_t starth, uint32_t co
 	int i;
 	for (i = 0; i < cmdheader->prdtl - 1; i++)
 	{
-		cmdtbl->prdt_entry[i].dba = (uint32_t)buf;
-		cmdtbl->prdt_entry[i].dbau = (uint32_t)buf >> 32;
+		cmdtbl->prdt_entry[i].dba = (uint64_t)buf;
+		cmdtbl->prdt_entry[i].dbau = (uint64_t)buf >> 32;
 		cmdtbl->prdt_entry[i].dbc = 8 * 1024;
 		cmdtbl->prdt_entry[i].i = 1;
 		buf += 4 * 1024;
 		count -= 16;
 	}
 
-	cmdtbl->prdt_entry[i].dba = (uint32_t)buf;
-	cmdtbl->prdt_entry[i].dbau = (uint32_t)buf >> 32;
+	cmdtbl->prdt_entry[i].dba = (uint64_t)buf;
+	cmdtbl->prdt_entry[i].dbau = (uint64_t)buf >> 32;
 	cmdtbl->prdt_entry[i].dbc = count << 9;
 	cmdtbl->prdt_entry[i].i = 1;
 
@@ -214,14 +214,14 @@ bool read(struct port_data *pdata, uint32_t startl, uint32_t starth, uint32_t co
 	cmdfis->c = 1;
 	cmdfis->command = 0x25;
 
-	cmdfis->lba0 = (uint32_t)startl;
-	cmdfis->lba1 = (uint32_t)(startl >> 8);
-	cmdfis->lba2 = (uint32_t)(startl >> 16);
+	cmdfis->lba0 = (uint64_t)startl;
+	cmdfis->lba1 = (uint64_t)(startl >> 8);
+	cmdfis->lba2 = (uint64_t)(startl >> 16);
 	cmdfis->device = 1 << 6;
 
-	cmdfis->lba3 = (uint32_t)(startl >> 24);
-	cmdfis->lba4 = (uint32_t)starth;
-	cmdfis->lba5 = (uint32_t)(starth >> 8);
+	cmdfis->lba3 = (uint64_t)(startl >> 24);
+	cmdfis->lba4 = (uint64_t)starth;
+	cmdfis->lba5 = (uint64_t)(starth >> 8);
 
 	cmdfis->countl = (count & 0xff);
 	cmdfis->counth = (count >> 8);
@@ -271,16 +271,18 @@ struct port_data **probe_port(HBA_MEM *abar)
 	{
 		if (pi & 1)
 		{
-			int dt = check_type((HBA_PORT *)&abar->ports[i]);
+			int dt = check_type(&abar->ports[i]);
 			if (dt == AHCI_DEV_SATA)
 			{
 				pdtable[i] = malloc(sizeof(struct port_data));
-				println("[SATA] Device found");
-				port_rebase(abar->ports, i, pdtable[i]);
+				println("[AHCI] Device found");
+				port_rebase((struct port_data*)(abar->ports), i, pdtable[i]);
+
+				return pdtable;
 			}
 		}
 		pi >>= 1;
 		i++;
 	}
-	return pdtable;
+	return NULL;
 }

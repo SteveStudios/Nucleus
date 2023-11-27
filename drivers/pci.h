@@ -10,6 +10,8 @@ extern "C"
 
 #include <stdint.h>
 #include <stdbool.h>
+#include "../kernel_lib/ports.h"
+#include "../kernel_lib/io.h"
 #include "../lib/liballoc/liballoc.h"
 
     struct _pci_driver;
@@ -40,6 +42,7 @@ extern "C"
 
     void pci_init();
     void pci_proc_dump(uint8_t *);
+    uint32_t pci_read_word(uint32_t bus, uint32_t slot, uint32_t func, uint32_t offset);
 
 #ifdef __cplusplus
 }

@@ -17,7 +17,7 @@ struct flanterm_context *get_ft_ctx()
 {
     if (!initialized)
     {
-        _std_in = (char*)malloc(32);
+        _std_in = malloc(32);
         ft_ctx = flanterm_fb_simple_init((uint32_t *)framebuffer_request.response->framebuffers[0]->address,
                                          framebuffer_request.response->framebuffers[0]->width,
                                          framebuffer_request.response->framebuffers[0]->height,

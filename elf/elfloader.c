@@ -67,7 +67,7 @@ bool elf_check_supported(Elf64_Ehdr *hdr)
 
 Elf64_Shdr *elf_sheader(Elf64_Ehdr *hdr)
 {
-    return (Elf64_Shdr *)((int)hdr + hdr->e_shoff);
+    return (Elf64_Shdr *)(hdr + hdr->e_shoff);
 }
 
 Elf64_Shdr *elf_section(Elf64_Ehdr *hdr, int idx)
@@ -92,13 +92,14 @@ int elf_load_stage1(Elf64_Ehdr *hdr)
             {
                 void *mem = malloc(section->sh_size);
                 memset(mem, 0, section->sh_size);
-                section->sh_offset = (int)mem - (int)hdr;
+                section->sh_offset = ((uint64_t)mem - (uint64_t)hdr);
             }
         }
     }
     return 0;
 }
 
+int elf_do_reloc(Elf64_Ehdr *hdr, Elf64_Rel *rel, Elf64_Shdr *reltab);
 int elf_load_stage2(Elf64_Ehdr *hdr)
 {
     Elf64_Shdr *shdr = elf_sheader(hdr);
@@ -111,7 +112,7 @@ int elf_load_stage2(Elf64_Ehdr *hdr)
         {
             for (idx = 0; idx < section->sh_size / section->sh_entsize; idx++)
             {
-                Elf64_Rel *reltab = &((Elf64_Rel *)((int)hdr + section->sh_offset))[idx];
+                Elf64_Rel *reltab = &((Elf64_Rel *)((uint64_t)hdr + (uint64_t)(section->sh_offset)))[idx];
                 int result = elf_do_reloc(hdr, reltab, section);
                 if (result == ELF_RELOC_ERR)
                 {
@@ -148,7 +149,7 @@ void *elf_load_file(void *file)
     if (!elf_check_supported(hdr))
     {
         println("[ELF] ELF File cannot be loaded.\n");
-        return;
+        return NULL;
     }
     switch (hdr->e_type)
     {
@@ -188,29 +189,21 @@ int elf_get_symval(Elf64_Ehdr *hdr, int table, unsigned int idx)
         return ELF_RELOC_ERR;
     }
 
-    int symaddr = (int)hdr + symtab->sh_offset;
+    uint64_t symaddr = (uint64_t)hdr + (uint64_t)symtab->sh_offset;
 
     Elf64_Sym *symbol = &((Elf64_Sym *)symaddr)[idx];
     if (symbol->st_shndx == SHN_UNDEF)
     {
-        Elf64_Shdr *strtab = elf_section(hdr, symtab->sh_link);
-        const char *name = (const char *)hdr + strtab->sh_offset + symbol->st_name;
 
-        void *target = NULL;
-
-        if (target == NULL)
-        {
-            if (ELF64_ST_BIND(symbol->st_info) & STB_WEAK)
-                return 0;
-            else
-            {
-                println("[ELF] Undefined External Symbol");
-                return ELF_RELOC_ERR;
-            }
-        }
+        if (ELF64_ST_BIND(symbol->st_info) & STB_WEAK)
+            return 0;
         else
-            return (int)target;
+        {
+            println("[ELF] Undefined External Symbol");
+            return ELF_RELOC_ERR;
+        }
     }
+    return 0;
 }
 
 #define DO_x86_64_64(S, A) ((S) + (A))
@@ -220,7 +213,7 @@ int elf_do_reloc(Elf64_Ehdr *hdr, Elf64_Rel *rel, Elf64_Shdr *reltab)
 {
     Elf64_Shdr *target = elf_section(hdr, reltab->sh_info);
 
-    int addr = (int)hdr + target->sh_offset;
+    uint64_t addr = (uint64_t)hdr + (uint64_t)(target->sh_offset);
     int *ref = (int *)(addr + rel->r_offset);
 
     int symval = 0;
@@ -239,7 +232,7 @@ int elf_do_reloc(Elf64_Ehdr *hdr, Elf64_Rel *rel, Elf64_Shdr *reltab)
         *ref = DO_x86_64_64(symval, *ref);
         break;
     case R_X86_64_PC64:
-        *ref = DO_x86_64_PC64(symval, *ref, (int)ref);
+        *ref = DO_x86_64_PC64(symval, *ref, (uint64_t)ref);
         break;
     default:
         println("[ELF] Unsupported Relocation Type");

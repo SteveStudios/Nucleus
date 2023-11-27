@@ -9,17 +9,6 @@ extern "C"
 #endif
 
 #define DIRECTORY_ENTRY_SIZE 255
-
-#define AWAIT(condition)     \
-    if (!condition)          \
-    {                        \
-        asm("cli");          \
-        while (!condition)   \
-        {                    \
-        }                    \
-        asm volatile("sti"); \
-    }
-
 #define KERNEL_LOC 0xffffffff80000000
 
 #ifdef __cplusplus

@@ -19,19 +19,18 @@ void alloc_single_page()
 
 void *alloc_page(int pages)
 {
-    uint32_t ret;
     uint32_t i;
 
     for (i = 0; i < pages; i++)
     {
         alloc_single_page();
     }
-    return (void *)((unsigned int)i * PAGE_SIZE);
+    return (void *)(uint64_t)((unsigned int)i * PAGE_SIZE);
 }
 
 void free_page(void *position, int pages)
 {
-    for (int i = (int)position / PAGE_SIZE; i < pages; i++)
+    for (int i = (int)(uint64_t)position / PAGE_SIZE; i < pages; i++)
     {
         mem_buf[i] = 0x00;
     }

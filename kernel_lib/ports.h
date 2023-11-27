@@ -10,8 +10,12 @@ extern "C"
 
 #include "stdint.h"
 
-    unsigned char inb(unsigned short port);
-    void outb(unsigned short port, unsigned char value);
+    void outb(uint16_t port, uint8_t d);
+    unsigned char inb(uint16_t port);
+
+    void outl(uint16_t port, uint32_t d);
+    uint32_t inl(uint16_t port);
+
     void io_wait();
 
 #ifdef __cplusplus

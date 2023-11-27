@@ -37,7 +37,7 @@ for ext in supportedExtensions:
                 if init_gcc:
                     print("\n---------------------------------\n[INFO] Invoking x86_64-elf-gcc...\n---------------------------------\n")
                     init_gcc = False
-                subprocess.run(["x86_64-elf-gcc", "-w", "-std=gnu11", "-ffreestanding", "-fno-stack-protector",
+                subprocess.run(["x86_64-elf-gcc", "-g", "-Wall", "-std=gnu11", "-ffreestanding", "-fno-stack-protector",
                                 "-fno-stack-check",
                                 "-fno-lto",
                                 "-fPIE",
@@ -105,6 +105,5 @@ match useQemu.replace(" ", "").lower():
         subprocess.run(["qemu-system-x86_64", "-boot", "d", "-cdrom", 'bin/iso/Nucleus.iso', "-d", "int", "-m", "2048", "-M", "smm=off"])
     case "":
         subprocess.run(["qemu-system-x86_64", "-boot", "d", "-cdrom", 'bin/iso/Nucleus.iso', "-d", "int", "-m", "2048", "-M", "smm=off"])
-        
     case "n" | "no":
         exit(0)

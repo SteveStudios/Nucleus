@@ -41,6 +41,9 @@ void kernel_hang()
         asm("cli; hlt");
 }
 
+bool error = false;
+extern uint32_t devs;
+
 // Entry point
 void kernel_enter(void)
 {
@@ -51,8 +54,11 @@ void kernel_enter(void)
     println("[INFO] Initialized PCI Driver");
 
     println("[EXT4] Initializing Filesystem...");
-    init_ext4(0);
-    println("[EXT4] Initialized Filesystem");
+    if (init_ext4(8))  {
+        error = true;
+        println("[EXT4] Failed to initialize Filesystem");
+    }
+    else println("[EXT4] Initialized Filesystem");
 
     println("[INFO] Enabling Interrupts...");
     
@@ -61,7 +67,9 @@ void kernel_enter(void)
     
     println("[INFO] Enabled Interrupts");
 
-    println("[INFO] Nucleus booted successfully");
+    if (error)
+        println("[WARNING] Nucleus booted with errors");
+    else println("[INFO] Nucleus booted successfully");
 
     // Make sure the system doesn't exit for no reason
     for (;;)
