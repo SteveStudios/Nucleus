@@ -54,7 +54,7 @@ void kernel_enter(void)
     println("[INFO] Initialized PCI Driver");
 
     println("[EXT4] Initializing Filesystem...");
-    if (init_ext4(8))  {
+    if (init_ext4(0))  {
         error = true;
         println("[EXT4] Failed to initialize Filesystem");
     }

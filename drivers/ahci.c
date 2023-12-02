@@ -37,59 +37,28 @@ static int check_type(HBA_PORT *port)
 #define HBA_PxCMD_FR 0x4000
 #define HBA_PxCMD_CR 0x8000
 
-void start_cmd(struct port_data *port)
+void start_cmd(HBA_PORT *port)
 {
-	while (port->port->cmd & HBA_PxCMD_CR)
+	while (port->cmd & HBA_PxCMD_CR)
 		;
 
-	port->port->cmd |= HBA_PxCMD_FRE;
-	port->port->cmd |= HBA_PxCMD_ST;
+	port->cmd |= HBA_PxCMD_FRE;
+	port->cmd |= HBA_PxCMD_ST;
 }
 
-void stop_cmd(struct port_data *port)
+void stop_cmd(HBA_PORT *port)
 {
-	port->port->cmd &= ~HBA_PxCMD_ST;
-	port->port->cmd &= ~HBA_PxCMD_FRE;
+	port->cmd &= ~HBA_PxCMD_ST;
+	port->cmd &= ~HBA_PxCMD_FRE;
 
 	while (1)
 	{
-		if (port->port->cmd & HBA_PxCMD_FR)
+		if (port->cmd & HBA_PxCMD_FR)
 			continue;
-		if (port->port->cmd & HBA_PxCMD_CR)
+		if (port->cmd & HBA_PxCMD_CR)
 			continue;
 		break;
 	}
-}
-
-void port_rebase(struct port_data *port, int portno, struct port_data *pdata)
-{
-	stop_cmd(port);
-
-	port->clb = (int)(AHCI_BASE + (portno << 10));
-	port->port->clbu = 0;
-	pdata->clb = port->clb;
-
-	memset((void *)(port->clb), 0, 1024);
-
-	port->fb = (int)(AHCI_BASE + (32 << 10) + (portno << 8));
-	port->port->fbu = 0;
-	pdata->fb = port->fb;
-	memset((int*)(port->fb), 0, 256);
-
-	HBA_CMD_HEADER *cmdheader = (HBA_CMD_HEADER *)(port->clb);
-	for (int i = 0; i < 32; i++)
-	{
-		cmdheader[i].prdtl = 8;
-		cmdheader[i].ctba = AHCI_BASE + (40 << 10) + (portno << 13) + (i << 8);
-		cmdheader[i].ctbau = 0;
-
-		pdata->ctba[i] = cmdheader[i].ctba;
-
-		memset((void *)cmdheader[i].ctba, 0, 256);
-	}
-
-	pdata->port = port->port;
-	start_cmd(port);
 }
 
 #define ATA_DEV_BUSY 0x80
@@ -108,14 +77,14 @@ int find_cmdslot(HBA_PORT *port)
 	return -1;
 }
 
-bool write(struct port_data *pdata, uint64_t startl, uint64_t starth, uint64_t count, char *buf)
-{		
-	pdata->port->is = (uint64_t)0xffff;
-	int slot = find_cmdslot(pdata->port);
+bool write(HBA_PORT *port, uint64_t startl, uint64_t starth, uint64_t count, char *buf)
+{
+	port->is = (uint64_t)0xffff;
+	int slot = find_cmdslot(port);
 	if (slot == -1)
 		return 0;
 
-	HBA_CMD_HEADER *cmdheader = (HBA_CMD_HEADER *)pdata->clb;
+	HBA_CMD_HEADER *cmdheader = (HBA_CMD_HEADER *)port->clb;
 	cmdheader += slot;
 	cmdheader->cfl = sizeof(FIS_REG_H2D) / sizeof(uint64_t);
 	cmdheader->w = 1;
@@ -123,7 +92,7 @@ bool write(struct port_data *pdata, uint64_t startl, uint64_t starth, uint64_t c
 	cmdheader->p = 1;
 	cmdheader->prdtl = (uint16_t)((count - 1) >> 4) + 1;
 
-	HBA_CMD_TBL *cmdtbl = (HBA_CMD_TBL *)pdata->ctba[slot];
+	HBA_CMD_TBL *cmdtbl = (HBA_CMD_TBL *)(cmdheader->ctba);
 	int i;
 	for (i = 0; i < cmdheader->prdtl - 1; i++)
 	{
@@ -157,18 +126,18 @@ bool write(struct port_data *pdata, uint64_t startl, uint64_t starth, uint64_t c
 	cmdfis->countl = count & 0xff;
 	cmdfis->counth = count >> 8;
 
-	pdata->port->ci = 1;
+	port->ci = 1;
 	while (1)
 	{
-		if ((pdata->port->ci & (1 << slot)) == 0)
+		if ((port->ci & (1 << slot)) == 0)
 			break;
-		if (pdata->port->is & (1 << 30))
+		if (port->is & (1 << 30))
 		{
 			println("[SATA] Error writing to Disk");
 			return 0;
 		}
 	}
-	if (pdata->port->is & (1 << 30))
+	if (port->is & (1 << 30))
 	{
 		println("[SATA] Error writing to Disk");
 		return 0;
@@ -176,21 +145,21 @@ bool write(struct port_data *pdata, uint64_t startl, uint64_t starth, uint64_t c
 	return 1;
 }
 
-bool read(struct port_data *pdata, uint64_t startl, uint64_t starth, uint64_t count, char *buf)
+bool read(HBA_PORT *port, uint64_t startl, uint64_t starth, uint64_t count, char *buf)
 {
-	pdata->port->is = (uint64_t)-1;
+	port->is = (uint64_t)-1;
 	int spin = 0;
-	int slot = find_cmdslot(pdata->port);
+	int slot = find_cmdslot(port);
 	if (slot == -1)
 		return 0;
 
-	HBA_CMD_HEADER *cmdheader = (HBA_CMD_HEADER *)pdata->clb;
+	HBA_CMD_HEADER *cmdheader = (HBA_CMD_HEADER *)(port->clb);
 	cmdheader += slot;
 	cmdheader->cfl = sizeof(FIS_REG_H2D) / sizeof(uint64_t);
 	cmdheader->w = 0;
 	cmdheader->prdtl = (uint16_t)((count - 1) >> 4) + 1;
 
-	HBA_CMD_TBL *cmdtbl = (HBA_CMD_TBL *)pdata->ctba[slot];
+	HBA_CMD_TBL *cmdtbl = (HBA_CMD_TBL *)(cmdheader->ctba);
 
 	int i;
 	for (i = 0; i < cmdheader->prdtl - 1; i++)
@@ -226,7 +195,7 @@ bool read(struct port_data *pdata, uint64_t startl, uint64_t starth, uint64_t co
 	cmdfis->countl = (count & 0xff);
 	cmdfis->counth = (count >> 8);
 
-	while ((pdata->port->tfd & (ATA_DEV_BUSY | ATA_DEV_DRQ)) && spin < 1000000)
+	while ((port->tfd & (ATA_DEV_BUSY | ATA_DEV_DRQ)) && spin < 1000000)
 	{
 		spin++;
 	}
@@ -236,20 +205,20 @@ bool read(struct port_data *pdata, uint64_t startl, uint64_t starth, uint64_t co
 		return 0;
 	}
 
-	pdata->port->ci = (1 << slot);
+	port->ci = (1 << slot);
 
 	while (true)
 	{
-		if ((pdata->port->ci & (1 << slot)) == 0)
+		if ((port->ci & (1 << slot)) == 0)
 			break;
-		if (pdata->port->is & (1 << 30))
+		if (port->is & (1 << 30))
 		{
 			println("[SATA] Error writing to Disk");
 			return 0;
 		}
 	}
 
-	if (pdata->port->is & (1 << 30))
+	if (port->is & (1 << 30))
 	{
 		println("[SATA] Error writing to Disk");
 		return 0;
@@ -258,14 +227,70 @@ bool read(struct port_data *pdata, uint64_t startl, uint64_t starth, uint64_t co
 	return 1;
 }
 
-struct port_data **probe_port(HBA_MEM *abar)
+static const AHCI_Device_Info AHCI_IntelDevices[] = {
+	{0x2922, "ICH9 (AHCI mode)"},
+	{0x2923, "ICH9 (AHCI mode)"},
+	{0x2924, "ICH9"},
+	{0x2925, "ICH9"},
+	{0x2927, "ICH9"},
+	{0x2829, "Intel ICH8M (AHCI mode)"},
+	{},
+};
+
+static const AHCI_Vendor_Info AHCI_KnownVendors[] = {
+	{0x8086, "Intel", (AHCI_Device_Info *)AHCI_IntelDevices},
+	{},
+};
+
+uint16_t pci_read_word16(uint8_t bus, uint8_t slot, uint8_t func, uint8_t offset)
+{
+	uint32_t address = (bus << 16) | ((slot) << 11) | ((func) << 8) |
+					   (offset & 0xFC) | 0x80000000;
+	outl(0xCF8, address);
+	io_wait();
+	volatile uint16_t tmp = ((inl(0xCFC) >> ((offset & 2) * 8)) & 0xFFFF);
+	return (tmp);
+}
+
+int find_ahci_pci(uint8_t *bus, uint8_t *slot, const char **vendor_name,
+				  const char **device_name)
+{
+	uint16_t vendor, device;
+	for (int _bus = 0; _bus < 256; _bus++)
+	{
+		for (int _slot = 0; _slot < 32; _slot++)
+		{
+			vendor = pci_read_word16(_bus, _slot, 0, (0x00 | 0x0));
+			for (AHCI_Vendor_Info *v = (AHCI_Vendor_Info *)AHCI_KnownVendors;
+				 v->vendor; v++)
+			{
+				if (v->vendor == vendor)
+				{
+					device = pci_read_word16(_bus, _slot, 0, (0x00 | 0x02));
+					for (AHCI_Device_Info *d = v->devices; d->device; d++)
+					{
+						if (d->device == device)
+						{
+							*bus = _bus;
+							*slot = _slot;
+							*vendor_name = v->vendor_name;
+							*device_name = d->device_name;
+							return 0;
+						}
+					}
+				}
+			}
+		}
+	}
+	return 1;
+}
+
+void probe_port(HBA_MEM *abar)
 {
 	glob_abar = abar;
 
 	uint32_t pi = abar->pi;
 	int i = 0;
-
-	struct port_data **pdtable = malloc(32 * sizeof(void *));
 
 	while (i < 32)
 	{
@@ -273,16 +298,9 @@ struct port_data **probe_port(HBA_MEM *abar)
 		{
 			int dt = check_type(&abar->ports[i]);
 			if (dt == AHCI_DEV_SATA)
-			{
-				pdtable[i] = malloc(sizeof(struct port_data));
 				println("[AHCI] Device found");
-				port_rebase((struct port_data*)(abar->ports), i, pdtable[i]);
-
-				return pdtable;
-			}
 		}
 		pi >>= 1;
 		i++;
 	}
-	return NULL;
 }

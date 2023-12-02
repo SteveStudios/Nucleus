@@ -22,7 +22,7 @@ extern "C"
         FIS_TYPE_BIST = 0x58,
         FIS_TYPE_PIO_SETUP = 0x5F,
         FIS_TYPE_DEV_BITS = 0xA1,
-    } FIS_TYPE;
+    } __attribute__((__packed__)) FIS_TYPE;
 
     typedef struct tagFIS_REG_H2D
     {
@@ -51,7 +51,7 @@ extern "C"
         uint64_t control;
 
         uint64_t rsv1[4];
-    } FIS_REG_H2D;
+    } __attribute__((__packed__)) FIS_REG_H2D;
 
     typedef struct tagFIS_REG_D2H
     {
@@ -81,7 +81,7 @@ extern "C"
         uint64_t rsv3[2];
 
         uint64_t rsv4[4];
-    } FIS_REG_D2H;
+    } __attribute__((__packed__)) FIS_REG_D2H;
 
     typedef struct tagFIS_DMA_SETUP
     {
@@ -105,7 +105,7 @@ extern "C"
 
         uint64_t resvd;
 
-    } FIS_DMA_SETUP;
+    } __attribute__((__packed__)) FIS_DMA_SETUP;
 
     typedef volatile struct tagHBA_PORT
     {
@@ -128,7 +128,7 @@ extern "C"
         uint64_t fbs;
         uint64_t rsv1[11];
         uint64_t vendor[4];
-    } HBA_PORT;
+    } __attribute__((__packed__)) HBA_PORT;
 
     typedef volatile struct tagHBA_MEM
     {
@@ -149,7 +149,7 @@ extern "C"
         uint64_t vendor[0x100 - 0xA0];
 
         HBA_PORT ports[1];
-    } HBA_MEM;
+    } __attribute__((__packed__)) HBA_MEM;
 
     typedef volatile struct tagHBA_FIS
     {
@@ -164,7 +164,7 @@ extern "C"
         uint64_t ufis[64];
 
         uint64_t rsv[0x100 - 0xA0];
-    } HBA_FIS;
+    } __attribute__((__packed__)) HBA_FIS;
 
     typedef struct tagHBA_CMD_HEADER
     {
@@ -187,7 +187,7 @@ extern "C"
         uint64_t ctbau;
 
         uint64_t rsv1[4];
-    } HBA_CMD_HEADER;
+    } __attribute__((__packed__)) HBA_CMD_HEADER;
 
 #define SATA_SIG_ATA 0x00000101
 #define SATA_SIG_ATAPI 0xEB140101
@@ -211,7 +211,7 @@ extern "C"
         uint64_t dbc : 22;
         uint64_t rsv1 : 9;
         uint64_t i : 1;
-    } HBA_PRDT_ENTRY;
+    } __attribute__((__packed__)) HBA_PRDT_ENTRY;
 
     typedef struct tagHBA_CMD_TBL
     {
@@ -219,7 +219,7 @@ extern "C"
         uint64_t acmd[16];
         uint64_t rsv[48];
         HBA_PRDT_ENTRY prdt_entry[1];
-    } HBA_CMD_TBL;
+    } __attribute__((__packed__)) HBA_CMD_TBL;
 
     struct port_data
     {
@@ -229,10 +229,24 @@ extern "C"
         HBA_PORT *port;
     };
 
-    struct port_data **probe_port(HBA_MEM *abar);
-    bool read(struct port_data *, uint64_t, uint64_t, uint64_t, char *);
-    bool write(struct port_data *, uint64_t, uint64_t, uint64_t, char *);
-    uint64_t checkAllBuses(void);
+    typedef struct
+    {
+        uint16_t device;
+        const char *device_name;
+    } AHCI_Device_Info;
+
+    typedef struct
+    {
+        uint16_t vendor;
+        const char *vendor_name;
+        AHCI_Device_Info *devices;
+    } AHCI_Vendor_Info;
+
+    void probe_port(HBA_MEM *abar);
+    bool read(HBA_PORT *, uint64_t, uint64_t, uint64_t, char *);
+    bool write(HBA_PORT *, uint64_t, uint64_t, uint64_t, char *);
+    int find_ahci_pci(uint8_t *bus, uint8_t *slot, const char **vendor_name,
+                      const char **device_name);
 
 #ifdef __cplusplus
 }

@@ -62,6 +62,13 @@
         "span": "c",
         "functional": "c",
         "cstdint": "c",
-        "*.tcc": "c"
+        "*.tcc": "c",
+        "compare": "c",
+        "format": "c",
+        "fstream": "c",
+        "iosfwd": "c",
+        "stop_token": "c",
+        "streambuf": "c",
+        "*.inc": "c"
     },
 }

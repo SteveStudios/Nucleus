@@ -6,9 +6,6 @@
 pci_device **pci_devices;
 uint32_t devs = 0;
 
-pci_driver **pci_drivers;
-uint32_t drivs = 0;
-
 uint32_t devices[8192];
 uint32_t vendors[8192];
 
@@ -81,7 +78,8 @@ void pci_probe()
                 pdev->vendor = vendor;
                 pdev->device = device;
                 pdev->func = function;
-                pdev->driver = 0;
+                pdev->bus = bus;
+                pdev->slot = slot;
 
                 add_pci_device(pdev);
             }
@@ -96,19 +94,11 @@ uint32_t pciCheckVendor(uint32_t bus, uint32_t slot)
 
 void pci_init()
 {
-    devs = drivs = 0;
+    devs = 0;
     pci_devices = malloc(32 * sizeof(pci_device));
-    pci_drivers = malloc(32 * sizeof(pci_driver));
     for (int i = 0; i < 8192; i++) {
         devices[i] = -1;
         vendors[i] = -1;
     }
     pci_probe();
-}
-
-void pci_register_driver(pci_driver *driv)
-{
-    pci_drivers[drivs] = driv;
-    drivs++;
-    return;
 }
